@@ -1,0 +1,77 @@
+.resume-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 2px solid #333;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  border: 1px solid #333;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.tab-btn.active {
+  background-color: #333;
+  color: #fff;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.section h3 {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 5px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.input-group input,
+.input-group select {
+  padding: 6px;
+  flex: 1;
+}
+
+.add-btn,
+.remove-btn {
+  padding: 6px 12px;
+  margin-left: 5px;
+  cursor: pointer;
+  border: 1px solid #333;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+.add-btn:hover,
+.remove-btn:hover {
+  background-color: #ddd;
+}
+
+.pdf-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pdf-btn:hover {
+  background-color: #555;
+}

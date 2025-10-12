@@ -1,0 +1,592 @@
+/* ==========================================================
+   THEME VARIABLES & GLOBAL STYLES
+   ========================================================== */
+
+:root {
+    --bg-primary: #0a0a14;        /* Very deep navy/dark background */
+    --bg-secondary: #12121e;      /* Section/Main background */
+    --bg-card: #1c1c23;           /* Slightly lighter card background */
+    --accent-blue: #007bff;       /* Primary accent color (Vibrant Blue) */
+    --accent-green: #28a745;      /* Success/Action Green */
+    --text-light: #f0f0f0;        /* Light text */
+    --text-muted: #a0a0a0;        /* Muted descriptive text */
+    --border-color: #2a2a35;      /* Subtle border line */
+    --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.6); /* Deeper shadow */
+    --input-bg: #22222c;          /* Input field background */
+}
+
+.profile-container {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px 6%; /* Increased horizontal padding for desktop */
+    background-color: var(--bg-primary); 
+    color: var(--text-light);
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+}
+
+/* --- Profile Header and Back Button Positioning --- */
+
+.profile-header {
+    position: relative; 
+    text-align: center;
+    margin-bottom: 50px; /* Increased margin */
+    padding-top: 20px;
+}
+
+/* NEW: Back to Home Button Styling & Positioning */
+.back-home-btn {
+    position: absolute; 
+    top: 25px; 
+    left: 0; 
+    padding: 10px 25px;
+    background: linear-gradient(90deg, var(--accent-green), #388e3c); 
+    color: white;
+    border: none;
+    border-radius: 50px; 
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.5px; /* Added spacing for clarity */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none; /* If using a Link component */
+}
+
+.back-home-btn:hover {
+    background: linear-gradient(90deg, #388e3c, var(--accent-green));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+}
+.back-home-btn i {
+    font-size: 1.1rem;
+}
+
+.profile-header h2 {
+    color: var(--text-light); 
+    font-size: 3rem; /* Slightly larger */
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.profile-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* --- Text Coloring for Read Mode (Questions/Answers) --- */
+.text-question {
+    color: var(--accent-blue); 
+    font-weight: 600;
+    margin-right: 10px; /* Increased margin for spacing */
+}
+
+.text-answer {
+    color: var(--text-light); 
+    font-weight: 500;
+}
+
+/* ==========================================================
+   CARD STYLES (DASHBOARD & DETAILS)
+   ========================================================== */
+
+.dashboard-section {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 50px; /* Increased margin */
+    align-items: stretch;
+}
+
+.profile-summary, .performance-section, .profile-card {
+    background: var(--bg-card); 
+    padding: 30px;
+    border-radius: 12px; 
+    box-shadow: var(--shadow-dark); 
+    border: 1px solid var(--border-color);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.profile-card:hover {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+    transform: translateY(-2px);
+}
+
+.profile-summary {
+    flex: 1; 
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    min-width: 350px; /* Minimum width for better scaling */
+}
+
+.performance-section {
+    flex: 2;
+}
+
+.summary-info h3 {
+    color: var(--text-light);
+    font-size: 1.9rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #3a3a45; /* Darker border */
+    padding-bottom: 10px;
+    font-weight: 700;
+}
+
+.summary-info p {
+    margin: 10px 0; /* Adjusted margin */
+    font-size: 1rem;
+}
+
+
+/* --- Profile Picture Area & Placeholder --- */
+
+.profile-pic-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Added to ensure image controls don't mess up layout */
+    min-width: 180px; 
+}
+
+.summary-pic, .profile-placeholder {
+    width: 180px; /* Larger size */
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 8px solid var(--accent-blue); /* Thicker border */
+    margin-bottom: 20px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem; 
+    font-weight: 600;
+    color: var(--accent-blue);
+    background-color: var(--input-bg); 
+    text-transform: uppercase;
+    box-shadow: 0 0 0 10px rgba(0, 123, 255, 0.1); /* Subtle ring effect */
+}
+
+/* Profile Picture Controls - Horizontal Layout */
+.profile-pic-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.8rem; /* Smaller text on buttons */
+    width: 100%;
+    flex-wrap: wrap; 
+}
+
+.profile-pic-controls button {
+    padding: 8px 10px;
+    border-radius: 6px; /* Slightly smaller radius */
+    font-weight: 600;
+    flex-grow: 1;
+    min-width: 80px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    border: 1px solid transparent;
+}
+
+.btn-upload { background-color: var(--accent-green); color: white; border-color: #388e3c; }
+.btn-upload:hover { background-color: #388e3c; transform: scale(1.03); }
+
+.btn-cancel-upload { background-color: #495057; color: white; border-color: #6c757d; }
+.btn-cancel-upload:hover { background-color: #3f4549; }
+
+.btn-remove { background-color: #dc3545; color: white; border-color: #c82333; }
+.btn-remove:hover { background-color: #c82333; transform: scale(1.03); }
+
+
+/* ==========================================================
+   PERFORMANCE CHART STYLES
+   ========================================================== */
+
+.performance-chart-container h4 {
+    color: var(--text-light);
+    border-bottom: 2px solid #3a3a45;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.performance-bar-wrapper {
+    background-color: var(--input-bg);
+    border-radius: 8px;
+    height: 30px; /* Slightly shorter bar */
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.performance-bar {
+    background: linear-gradient(90deg, #17a2b8, var(--accent-blue)); 
+    height: 100%;
+    text-align: right; /* Text aligned to the right inside the bar */
+    padding-right: 10px;
+    line-height: 30px;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem; /* Smaller font for professionalism */
+    transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+}
+
+.performance-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem; /* Smaller font */
+    color: var(--text-muted);
+    padding: 0 5px;
+}
+.performance-stats span {
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+
+/* ==========================================================
+   DETAILED PROFILE CARD & EDIT FIELDS
+   ========================================================== */
+
+.profile-card {
+    margin-bottom: 40px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3a3a45;
+    padding-bottom: 10px;
+}
+
+.card-header h3 {
+    color: var(--accent-blue);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.profile-actions button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    margin-left: 10px; /* Space between action buttons */
+}
+
+.edit-btn { background-color: var(--accent-blue); color: white; }
+.edit-btn:hover { background-color: #0056b3; transform: translateY(-1px); }
+
+.save-btn { background-color: var(--accent-green); color: white; }
+.save-btn:hover { background-color: #388e3c; transform: translateY(-1px); }
+
+.cancel-btn { background-color: #6c757d; color: white; }
+.cancel-btn:hover { background-color: #5a6268; }
+
+
+/* --- Info Grid --- */
+.profile-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Min width increased */
+    gap: 25px 40px; /* Increased vertical and horizontal gap */
+    align-items: center;
+    padding: 15px 0;
+}
+
+.profile-info-grid label {
+    color: var(--accent-blue);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem; /* Slightly smaller label text */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Unified input styles */
+.profile-info-grid input {
+    width: 100%;
+    padding: 10px 15px; /* Tighter padding for sleek look */
+    border: 1px solid #3a3a45;
+    border-radius: 6px;
+    background-color: var(--input-bg);
+    color: var(--text-light);
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.profile-info-grid input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.4);
+    outline: none;
+    background-color: #202028;
+}
+
+.profile-info-grid p {
+    margin: 0;
+    padding: 10px 0;
+    color: var(--text-light);
+    border-bottom: 1px solid #2a2a35; /* Solid separator line */
+    font-size: 1rem;
+}
+
+
+/* ==========================================================
+   COURSE LISTS
+   ========================================================== */
+
+.course-list-section h3 {
+    color: var(--text-light);
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3a3a45;
+    padding-bottom: 10px;
+}
+
+.course-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.course-list li {
+    padding: 18px 25px; /* Increased padding */
+    border-bottom: none; 
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--bg-card); 
+    transition: background-color 0.2s, border-left 0.3s;
+    border-radius: 8px; 
+    margin-bottom: 10px; /* Space between items */
+    border-left: 5px solid var(--border-color); /* Subtle left border */
+}
+
+.course-list li:hover {
+    background-color: #25252f; 
+    border-left: 5px solid var(--accent-blue); /* Highlight on hover */
+}
+
+.course-list li i {
+    color: var(--accent-blue);
+    font-size: 1.4rem; /* Larger icon */
+}
+.course-list span {
+    font-weight: 600;
+}
+
+
+.course-status-badge {
+    font-size: 0.8rem; /* Smaller, neat badge text */
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-weight: 700;
+    margin-left: auto; 
+    text-transform: uppercase;
+}
+
+.course-status-completed .course-status-badge {
+    background-color: #1c5625;
+    color: #90ee90;
+    border: 1px solid var(--accent-green);
+}
+
+.course-status-inprogress .course-status-badge {
+    background-color: #6c5401;
+    color: #ffc107;
+    border: 1px solid #ffc107;
+}
+
+.no-data {
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+/* ==========================================================
+   CHANGE PASSWORD SECTION STYLES
+   ========================================================== */
+
+.password-section {
+    margin-top: 40px;
+    /* Uses .profile-card styling */
+}
+
+.password-section h3 {
+    color: var(--accent-green); 
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3a3a45;
+}
+
+.password-form-grid {
+    display: grid;
+    /* Use a fixed column for labels for better alignment */
+    grid-template-columns: 220px 1fr; 
+    gap: 20px 30px;
+    align-items: center;
+    padding: 0; /* Remove padding here, use gap for spacing */
+}
+
+.password-form-item {
+    display: contents; /* Allows children to participate in the grid */
+}
+
+.password-form-grid label {
+    text-align: right; 
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: none;
+    padding-top: 5px; /* Vertical alignment with input */
+}
+
+/* Ensure the input styling is consistent with the profile-info-grid inputs */
+.password-form-grid input {
+    width: 100%;
+    padding: 10px 15px; 
+    border: 1px solid #3a3a45;
+    border-radius: 6px;
+    background-color: var(--input-bg);
+    color: var(--text-light);
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.password-form-grid input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.4);
+    outline: none;
+    background-color: #202028;
+}
+
+/* Password Visibility Appearance */
+.password-form-grid input[type="password"] {
+    font-size: 1.1rem; /* Slightly larger for dots */
+    letter-spacing: 3px; /* Wider spacing on dots for a clean look */
+    font-family: monospace; /* Ensures consistent dot spacing */
+}
+
+
+.change-password-btn {
+    grid-column: 2 / 3; 
+    width: 100%;
+    max-width: 250px; /* Nicer width for the main button */
+    padding: 12px 20px;
+    margin-top: 15px;
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.3s, transform 0.2s;
+    justify-self: start; 
+}
+
+.change-password-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+/* Validation Messages */
+.password-message {
+    grid-column: 2 / 3;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: 600;
+    margin: 10px 0 5px 0;
+    font-size: 0.95rem;
+}
+
+.password-error-msg {
+    background-color: #58151c; 
+    color: #ffbaba;
+    border: 1px solid #dc3545;
+}
+
+.password-success-msg {
+    background-color: #1c5625; 
+    color: #90ee90;
+    border: 1px solid var(--accent-green);
+}
+
+
+/* ==========================================================
+   RESPONSIVENESS
+   ========================================================== */
+
+@media (max-width: 992px) {
+    .dashboard-section {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .profile-summary {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .profile-info-grid {
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
+    
+    .back-home-btn {
+        position: static; 
+        width: 100%;
+        margin-bottom: 25px;
+        justify-content: center;
+    }
+    
+    /* Profile Summary text alignment fix */
+    .summary-info {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Profile Details Grid */
+    .profile-info-grid label {
+        font-size: 1rem;
+    }
+
+    /* Password Form Stacking */
+    .password-form-grid {
+        grid-template-columns: 1fr; 
+        gap: 15px;
+    }
+
+    .password-form-grid label {
+        text-align: left;
+    }
+    
+    .change-password-btn, .password-message {
+        grid-column: 1 / 2;
+        max-width: none;
+        justify-self: stretch;
+    }
+    
+    /* General Padding */
+    .profile-container {
+        padding: 20px 4%;
+    }
+}

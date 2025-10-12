@@ -1,0 +1,278 @@
+/* Variables for easy theme changes */
+:root {
+    --color-bg-dark: #0A0A0A;
+    --color-bg-card: #1C1C1C;
+    --color-text-light: #F0F0F0;
+    --color-text-secondary: #A0A0A0;
+    --color-primary-accent: #00A3FF; /* Bright blue for professionalism */
+    --color-success: #4CAF50;
+    --color-shadow: rgba(0, 0, 0, 0.5);
+    --border-radius-base: 8px;
+}
+
+/* Body and Page Layout */
+body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+    font-family: 'Inter', sans-serif; /* Using Inter, a modern, professional font */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.course-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 0; /* Adjusted padding */
+}
+
+/* Course Header Section */
+.course-header {
+    background-color: var(--color-bg-card);
+    width: 100%;
+    margin-bottom: 40px;
+    box-shadow: 0 5px 20px var(--color-shadow);
+    text-align: center;
+    border-radius: var(--border-radius-base);
+    overflow: hidden;
+}
+
+.course-image {
+    width: 100%;
+    height: 400px; /* Consistent height */
+    object-fit: cover;
+    opacity: 0.8; /* Slightly dimmed for professionalism */
+    transition: opacity 0.3s;
+}
+
+.course-info {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.course-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin: 0 0 15px 0;
+    color: var(--color-primary-accent);
+    letter-spacing: -0.5px;
+}
+
+.course-description {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 900px;
+}
+
+/* --- PROGRESS BAR SECTION --- */
+.progress-section {
+    padding: 0 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.progress-text {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+    margin-bottom: 10px;
+}
+
+.progress-bar-container {
+    height: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1e90ff, var(--color-primary-accent));
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* --- Language Tabs --- */
+.language-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.language-btn {
+    background-color: #333;
+    color: var(--color-text-light);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.language-btn:hover {
+    background-color: #444;
+}
+
+.language-btn.active {
+    background-color: var(--color-primary-accent);
+    color: var(--color-bg-dark);
+    box-shadow: 0 4px 10px rgba(0, 163, 255, 0.4);
+    border-color: var(--color-primary-accent);
+}
+
+/* --- Videos and Modules Container --- */
+.modules-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Larger cards */
+    gap: 30px;
+    padding: 20px;
+}
+
+.video-card {
+    background-color: var(--color-bg-card);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #333;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px var(--color-shadow);
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.video-controls {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.video-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-light);
+    margin-right: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* Mark as Finished Button */
+.mark-btn {
+    background-color: #555;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+    white-space: nowrap;
+    font-size: 0.9rem;
+}
+
+.mark-btn:not(.finished):hover {
+    background-color: #666;
+    transform: translateY(-1px);
+}
+
+.mark-btn.finished {
+    background-color: var(--color-success);
+    cursor: default;
+    color: var(--color-bg-dark);
+    font-weight: 700;
+    box-shadow: 0 2px 5px rgba(76, 175, 80, 0.4);
+}
+
+.mark-btn.finished:hover, .mark-btn[disabled] {
+    background-color: var(--color-success);
+    transform: none;
+    opacity: 0.8;
+}
+
+/* --- Mock Interview Button --- */
+.mock-interview-container {
+    width: 100%;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.mock-btn {
+    background: linear-gradient(45deg, #1e90ff, var(--color-primary-accent));
+    color: white;
+    padding: 14px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 8px 20px rgba(0, 163, 255, 0.4);
+}
+
+.mock-btn:hover {
+    background: linear-gradient(45deg, #0077cc, #0088e6);
+    box-shadow: 0 10px 25px rgba(0, 163, 255, 0.6);
+    transform: translateY(-3px);
+}
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .modules-container {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .course-title {
+        font-size: 2.5rem;
+    }
+    .course-image {
+        height: 250px;
+    }
+    .course-description {
+        font-size: 1rem;
+    }
+    .modules-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 10px;
+    }
+    .video-title {
+        font-size: 1rem;
+    }
+    .mark-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+}

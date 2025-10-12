@@ -1,0 +1,125 @@
+/* Hero Section */
+.hero {
+  text-align: center;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  padding: 3rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.search-filters input,
+.search-filters select {
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
+}
+
+.search-filters button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #ff9800;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-filters button:hover {
+  background-color: #e68a00;
+}
+
+/* Jobs Grid */
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.job-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.job-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.company {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.location {
+  font-size: 0.95rem;
+  color: #777;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.apply-btn {
+  display: inline-block;
+  text-decoration: none;
+  background-color: #4caf50;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.apply-btn:hover {
+  background-color: #45a049;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-weight: 600;
+  margin: 2rem 0;
+  color: #ff0000;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .search-filters {
+    flex-direction: column;
+  }
+}

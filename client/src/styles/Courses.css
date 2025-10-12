@@ -1,0 +1,258 @@
+/* --- Variables for a Clean, Professional Light Theme --- */
+:root {
+    --color-bg-light: #FFFFFF; /* Pure White Background */
+    --color-bg-card: #F8F9FA; /* Off-White/Light Gray Card Background */
+    --color-text-dark: #212529; /* Dark text for high contrast */
+    --color-text-secondary: #6C757D; /* Subdued gray text */
+    --color-accent-primary: #007BFF; /* Bright Blue Accent */
+    --color-accent-secondary: #28A745; /* Green for success/buttons */
+    --shadow-light: 0 4px 10px rgba(0, 0, 0, 0.1);
+    --border-radius-base: 10px;
+}
+
+/* =========================
+   General Page Styling
+   ========================= */
+.courses-page-container {
+    /* Use 'body' or the container element for the main background */
+    background-color: var(--color-bg-light);
+    color: var(--color-text-dark);
+    min-height: 100vh;
+    padding-top: 80px;
+    font-family: 'Inter', Arial, sans-serif;
+    max-width: 1900px;
+    margin: 0 auto;
+    padding: 100px 20px 40px;
+}
+
+/* =========================
+   Navbar
+   ========================= */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: var(--color-bg-light); /* White Navbar */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-bottom: 1px solid #dee2e6;
+}
+
+.navbar-logo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-accent-primary); /* Blue logo */
+    letter-spacing: -0.5px;
+    cursor: pointer;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+}
+
+.navbar-links li a {
+    color: var(--color-text-dark); /* Dark text for links */
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-links li a:hover {
+    color: var(--color-accent-primary);
+}
+
+.navbar-user {
+    color: var(--color-text-dark);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 8px 15px;
+    background-color: #d8bbde;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.interested-btn {
+    background-color: var(--color-accent-primary);
+    color: var(--color-bg-light); /* White text on blue button */
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.interested-btn:hover {
+    background-color: var(--color-accent-hover); /* A darker blue on hover */
+    transform: scale(1.03);
+}
+
+/* =========================
+   Page Title
+   ========================= */
+.page-title {
+    text-align: center;
+    margin: 40px 0 50px;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--color-text-dark); /* Dark title text */
+}
+
+/* =========================
+   Courses Grid
+   ========================= */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    padding: 0 20px;
+}
+
+/* Individual Course Card */
+.course-card {
+    background-color: var(--color-bg-card); /* Light card background */
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--shadow-light); /* Subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e9ecef; /* Light border for definition */
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--color-accent-primary);
+}
+
+.course-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: var(--border-radius-base);
+    border-top-right-radius: var(--border-radius-base);
+    opacity: 1; 
+}
+
+.card-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* The fixed font-size issue is resolved using clamp in the JS component's original CSS */
+.course-card .course-title {
+    font-size: clamp(1.2rem, 2vw, 1.6rem); 
+    font-weight: 700;
+    color: var(--color-text-dark); /* Dark text color */
+    margin-bottom: 10px;
+}
+
+.course-description {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary); /* Subdued gray text color */
+    margin-bottom: 20px;
+    line-height: 1.4;
+    flex-grow: 1;
+    min-height: 40px;
+}
+
+/* Buttons Container */
+.course-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Learn Button */
+.learn-btn {
+    background-color: var(--color-accent-secondary); /* Green button */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    text-align: center;
+    flex-grow: 1;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.learn-btn:hover {
+    background-color: #218838;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4);
+}
+
+/* Interested Button */
+.interested-course-btn {
+    background-color: transparent;
+    color: var(--color-accent-primary);
+    border: 1px solid var(--color-accent-primary);
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.interested-course-btn:hover:not(:disabled) {
+    background-color: var(--color-accent-primary);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+.interested-course-btn:disabled {
+    background-color: var(--color-text-secondary); /* Light gray for disabled */
+    color: white;
+    border-color: var(--color-text-secondary);
+    cursor: default;
+    opacity: 0.9;
+}
+
+/* =========================
+   Responsive Design
+   ========================= */
+@media (max-width: 1200px) {
+    .courses-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+    .page-title {
+        font-size: 2.2rem;
+    }
+    .courses-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 0 10px;
+    }
+    .course-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .learn-btn, .interested-course-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
