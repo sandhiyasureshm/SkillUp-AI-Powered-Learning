@@ -46,10 +46,10 @@ app.use('/courses', require('./routes/courseRoutes'));
 app.use('/api/jobs', require('./routes/jobs'));
 
 // AI Practice Routes
-// Coding routes will be accessed via: http://localhost:5000/api/coding/...
+// Coding routes will be accessed via: http://skillup-ai-powered-learning-1.onrender.com/api/coding/...
 app.use('/api/coding', codingRoutes); 
 
-// Mock Interview routes will be accessed via: http://localhost:5000/api/mock/generate-interview
+// Mock Interview routes will be accessed via: http://skillup-ai-powered-learning-1.onrender.com/api/mock/generate-interview
 // This replaces the incorrect lines you had commented out.
 app.use('/api/mock', mockInterviewRoutes); 
 app.use('/api/users', userRoutes);
