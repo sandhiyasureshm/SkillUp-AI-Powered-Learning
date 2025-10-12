@@ -23,7 +23,7 @@ const QuizForm = () => {
         setAnswers({});
 
         try {
-            const response = await axios.post("http://localhost:5000/api/generate-questions", {
+            const response = await axios.post("http://skillup-ai-powered-learning-1.onrender.com/api/generate-questions", {
                 topic,
                 level,
                 numQuestions: parseInt(numQuestions)

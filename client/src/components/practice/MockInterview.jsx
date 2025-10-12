@@ -154,7 +154,7 @@ const MockInterview = () => {
     const generateFinalReport = async (finalQuestions) => {
         setLoading(true);
         try {
-            const reportResponse = await axios.post("http://localhost:5000/api/mock/generate-report", {
+            const reportResponse = await axios.post("http://skillup-ai-powered-learning-1.onrender.com/api/mock/generate-report", {
                 results: finalQuestions.map(q => ({
                     question: q.text,
                     category: q.category,
@@ -177,7 +177,7 @@ const MockInterview = () => {
         setIsListening(false); 
         
         try {
-            const evaluationResponse = await axios.post("http://localhost:5000/api/mock/evaluate-answer", {
+            const evaluationResponse = await axios.post("http://skillup-ai-powered-learning-1.onrender.com/api/mock/evaluate-answer", {
                 question: currentQuestion.text,
                 ideal_answer: currentQuestion.ideal_answer,
                 user_answer: answer,
@@ -268,7 +268,7 @@ const MockInterview = () => {
         }
 
         try {
-            const response = await axios.post("http://localhost:5000/api/mock/generate-interview", { role });
+            const response = await axios.post("http://skillup-ai-powered-learning-1.onrender.com/api/mock/generate-interview", { role });
             setQuestions(response.data);
             setInterviewStarted(true);
         } catch (err) {

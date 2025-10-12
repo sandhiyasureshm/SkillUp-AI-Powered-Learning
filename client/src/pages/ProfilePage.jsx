@@ -64,7 +64,7 @@ function ProfilePage() {
             try {
                 // Ensure the backend endpoint returns populated course data
                 const res = await axios.get(
-                    `http://localhost:5000/api/users/${encodeURIComponent(userEmail)}`
+                    `http://skillup-ai-powered-learning-1.onrender.com/api/users/${encodeURIComponent(userEmail)}`
                 );
                 const userData = res.data;
                 setUser(userData);
@@ -133,7 +133,7 @@ function ProfilePage() {
         
         try {
             const res = await axios.put(
-                `http://localhost:5000/api/users/${encodeURIComponent(userEmail)}`,
+                `http://skillup-ai-powered-learning-1.onrender.com/api/users/${encodeURIComponent(userEmail)}`,
                 form,
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
@@ -184,7 +184,7 @@ function ProfilePage() {
     try {
         const res = await axios.put(
             // Correct URL path: /api/users/change-password/:email
-            `http://localhost:5000/api/users/change-password/${encodeURIComponent(userEmail)}`,
+            `http://skillup-ai-powered-learning-1.onrender.com/api/users/change-password/${encodeURIComponent(userEmail)}`,
             {
                 // Sends the passwords as plain text JSON body
                 currentPassword: passwordForm.currentPassword, 

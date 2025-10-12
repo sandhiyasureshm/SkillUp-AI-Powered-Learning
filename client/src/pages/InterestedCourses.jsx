@@ -18,7 +18,7 @@ const InterestedCourses = () => {
   // Fetch user's interested courses
   const fetchInterestedCourses = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/get-interests/${userId}`);
+      const response = await axios.get(`http://skillup-ai-powered-learning-1.onrender.com/get-interests/${userId}`);
       setInterestedCourses(response.data.interestedCourses);
     } catch (error) {
       console.error('Error fetching interested courses:', error);
@@ -30,7 +30,7 @@ const InterestedCourses = () => {
     if (!user) return alert('Please login to remove courses');
 
     try {
-      await axios.post('http://localhost:5000/remove-interest', {
+      await axios.post('http://skillup-ai-powered-learning-1.onrender.com/remove-interest', {
         userId: user._id,
         courseId
       });
@@ -64,7 +64,7 @@ const InterestedCourses = () => {
           {interestedCourses.map(course => (
             <div key={course._id} className="course-card">
               <img
-                src={`http://localhost:5000/images/${course.imageUrl}`}
+                src={`http://skillup-ai-powered-learning-1.onrender.com/images/${course.imageUrl}`}
                 alt={course.title}
                 className="course-img"
               />
