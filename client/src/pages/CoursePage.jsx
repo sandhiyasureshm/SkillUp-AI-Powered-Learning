@@ -128,7 +128,7 @@ function CoursePage({ user: propUser }) {
                             <iframe
                                 width="100%"
                                 height="250"
-                                src={`httpss://www.youtube.com/embed/${extractVideoId(video.link)}`}
+                                src={`https://www.youtube.com/embed/${extractVideoId(video.link)}`}
                                 title={video.title}
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -17,7 +17,7 @@ export default function CentralGovtExamsPage() {
         The job offers immense power, respect, and responsibility to bring social impact across India.
         Extensive preparation, time management, and analytical ability are crucial for success in this exam.
       `,
-      link: "httpss://upsconline.nic.in",
+      link: "https://upsconline.nic.in",
     },
     {
       title: "SSC Combined Graduate Level (CGL) Examination",
@@ -30,7 +30,7 @@ export default function CentralGovtExamsPage() {
         stable pay, and a respected position in offices like the CBI, External Affairs, and Finance Ministry.
         It is one of the most popular and competitive government exams after graduation.
       `,
-      link: "httpss://ssc.nic.in",
+      link: "https://ssc.nic.in",
     },
     {
       title: "RRB NTPC (Railway Recruitment Board Non-Technical)",
@@ -43,7 +43,7 @@ export default function CentralGovtExamsPage() {
         excellent pay, travel benefits, pension, and long-term stability. The NTPC roles are known for
         comfort, authority, and respect in one of the largest government sectors in India.
       `,
-      link: "httpss://indianrailways.gov.in",
+      link: "https://indianrailways.gov.in",
     },
     {
       title: "IBPS Probationary Officer (PO) Examination",
@@ -56,7 +56,7 @@ export default function CentralGovtExamsPage() {
         as Assistant Managers. IBPS PO is a gateway to a secure banking career with steady promotions and opportunities
         to move into higher managerial positions.
       `,
-      link: "httpss://ibps.in",
+      link: "https://ibps.in",
     },
     {
       title: "SBI Probationary Officer (SBI PO) Examination",
@@ -70,7 +70,7 @@ export default function CentralGovtExamsPage() {
         The PO role involves customer relationship management, loan processing, and branch operations.
         It’s one of the most sought-after banking careers in the country.
       `,
-      link: "httpss://sbi.co.in",
+      link: "https://sbi.co.in",
     },
     {
       title: "LIC Assistant Administrative Officer (AAO)",
@@ -84,7 +84,7 @@ export default function CentralGovtExamsPage() {
         Working with LIC offers job security, excellent benefits, and pension schemes, making it one of the most prestigious
         insurance sector jobs in India.
       `,
-      link: "httpss://licindia.in",
+      link: "https://licindia.in",
     },
     {
       title: "GATE (Graduate Aptitude Test in Engineering)",
@@ -97,7 +97,7 @@ export default function CentralGovtExamsPage() {
         GATE-qualified candidates are often offered high-paying technical roles in government R&D and energy sectors.
         The exam also opens doors for higher education and international opportunities.
       `,
-      link: "httpss://gate.iitkgp.ac.in",
+      link: "https://gate.iitkgp.ac.in",
     },
     {
       title: "ISRO Scientist/Engineer Examination",
@@ -109,7 +109,7 @@ export default function CentralGovtExamsPage() {
         and space applications for national development. ISRO provides research-oriented careers with high intellectual
         satisfaction and global recognition. It’s ideal for candidates passionate about space technology and innovation.
       `,
-      link: "httpss://isro.gov.in",
+      link: "https://isro.gov.in",
     },
     {
       title: "DRDO Scientist Entry Test (SET)",
@@ -121,7 +121,7 @@ export default function CentralGovtExamsPage() {
         missiles, AI, robotics, and cybersecurity technologies. It provides an exciting environment for innovation
         and hands-on experience in defense R&D. DRDO careers offer respect, research exposure, and long-term stability.
       `,
-      link: "httpss://drdo.gov.in",
+      link: "https://drdo.gov.in",
     },
     {
       title: "Combined Defence Services (CDS) & NDA Examination",
@@ -134,7 +134,7 @@ export default function CentralGovtExamsPage() {
         The career provides adventure, leadership, and lifelong benefits including pensions, housing, and global respect.
         Ideal for those who aspire to protect and lead the nation.
       `,
-      link: "httpss://upsc.gov.in",
+      link: "https://upsc.gov.in",
     },
         {
       title: "EPFO (Employees' Provident Fund Organisation) Examination",
@@ -146,7 +146,7 @@ export default function CentralGovtExamsPage() {
         It includes a written exam followed by an interview.
         The job offers high social respect, pension benefits, and stable work-life balance.
       `,
-      link: "httpss://epfindia.gov.in",
+      link: "https://epfindia.gov.in",
     },
     {
       title: "Indian Coast Guard Assistant Commandant Examination",
@@ -158,7 +158,7 @@ export default function CentralGovtExamsPage() {
         Officers lead operations like rescue, anti-smuggling, and coastal security.
         The job offers adventure, honor, and a chance to serve the nation at sea.
       `,
-      link: "httpss://joinindiancoastguard.gov.in",
+      link: "https://joinindiancoastguard.gov.in",
     },
   ];
 

@@ -224,8 +224,8 @@ function ResumeHub({ activeNav, setActiveNav }) {
               <div style={styles.links}>
                 {formData.email && <span style={styles.contactItem}>{formData.email}</span>}
                 {formData.phone && <span style={styles.contactItem}>| {formData.phone}</span>}
-                {formData.linkedin && <a href={`httpss://${formData.linkedin}`} style={styles.contactItem}>| LinkedIn</a>}
-                {formData.github && <a href={`httpss://${formData.github}`} style={styles.contactItem}>| GitHub</a>}
+                {formData.linkedin && <a href={`https://${formData.linkedin}`} style={styles.contactItem}>| LinkedIn</a>}
+                {formData.github && <a href={`https://${formData.github}`} style={styles.contactItem}>| GitHub</a>}
               </div>
             </div>
 

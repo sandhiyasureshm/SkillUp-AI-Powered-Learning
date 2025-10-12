@@ -30,17 +30,17 @@ export default function FrontendTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/3JluqTojuME"
+            src="https://www.youtube.com/embed/3JluqTojuME"
             title="HTML5 Tutorial"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/pQN-pnXPaVg"
+            src="https://www.youtube.com/embed/pQN-pnXPaVg"
             title="HTML5 Advanced Concepts"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/Oe421EPjeBE"
+            src="https://www.youtube.com/embed/Oe421EPjeBE"
             title="HTML5 Forms & Validation"
             allowFullScreen
           ></iframe>
@@ -49,10 +49,10 @@ export default function FrontendTutorials() {
         <div className="resources">
           <h3>📚 Useful Resources:</h3>
           <ul>
-            <li><a href="httpss://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">MDN HTML5 Guide</a></li>
-            <li><a href="httpss://www.w3schools.com/html/" target="_blank">W3Schools HTML5</a></li>
-            <li><a href="httpss://www.freecodecamp.org/learn/2022/responsive-web-design/" target="_blank">FreeCodeCamp HTML5</a></li>
-            <li><a href="httpss://codepen.io/trending" target="_blank">Try HTML Online on CodePen</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">MDN HTML5 Guide</a></li>
+            <li><a href="https://www.w3schools.com/html/" target="_blank">W3Schools HTML5</a></li>
+            <li><a href="https://www.freecodecamp.org/learn/2022/responsive-web-design/" target="_blank">FreeCodeCamp HTML5</a></li>
+            <li><a href="https://codepen.io/trending" target="_blank">Try HTML Online on CodePen</a></li>
           </ul>
         </div>
       </section>
@@ -68,17 +68,17 @@ export default function FrontendTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/1Rs2ND1ryYc"
+            src="https://www.youtube.com/embed/1Rs2ND1ryYc"
             title="CSS Flexbox & Grid"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/jV8B24rSN5o"
+            src="https://www.youtube.com/embed/jV8B24rSN5o"
             title="CSS Animations & Transitions"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/yfoY53QXEnI"
+            src="https://www.youtube.com/embed/yfoY53QXEnI"
             title="CSS Variables & Modern Techniques"
             allowFullScreen
           ></iframe>
@@ -87,10 +87,10 @@ export default function FrontendTutorials() {
         <div className="resources">
           <h3>📚 Useful Resources:</h3>
           <ul>
-            <li><a href="httpss://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">MDN CSS Reference</a></li>
-            <li><a href="httpss://css-tricks.com/" target="_blank">CSS-Tricks Advanced Guides</a></li>
-            <li><a href="httpss://www.w3schools.com/css/" target="_blank">W3Schools CSS3</a></li>
-            <li><a href="httpss://codepen.io/trending" target="_blank">Try CSS Online on CodePen</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">MDN CSS Reference</a></li>
+            <li><a href="https://css-tricks.com/" target="_blank">CSS-Tricks Advanced Guides</a></li>
+            <li><a href="https://www.w3schools.com/css/" target="_blank">W3Schools CSS3</a></li>
+            <li><a href="https://codepen.io/trending" target="_blank">Try CSS Online on CodePen</a></li>
           </ul>
         </div>
       </section>
@@ -106,17 +106,17 @@ export default function FrontendTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/NCwa_xi0Uuc"
+            src="https://www.youtube.com/embed/NCwa_xi0Uuc"
             title="JavaScript ES6+ Advanced"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/PoRJizFvM7s"
+            src="https://www.youtube.com/embed/PoRJizFvM7s"
             title="Async JS & Fetch API"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/0ik6X4DJKCc"
+            src="https://www.youtube.com/embed/0ik6X4DJKCc"
             title="JavaScript DOM Manipulation"
             allowFullScreen
           ></iframe>
@@ -125,10 +125,10 @@ export default function FrontendTutorials() {
         <div className="resources">
           <h3>🌐 Learning Links:</h3>
           <ul>
-            <li><a href="httpss://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">MDN JavaScript Docs</a></li>
-            <li><a href="httpss://javascript.info/" target="_blank">JavaScript.info</a></li>
-            <li><a href="httpss://www.geeksforgeeks.org/javascript/" target="_blank">GeeksforGeeks JS</a></li>
-            <li><a href="httpss://stackblitz.com/" target="_blank">Try JS Online on StackBlitz</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">MDN JavaScript Docs</a></li>
+            <li><a href="https://javascript.info/" target="_blank">JavaScript.info</a></li>
+            <li><a href="https://www.geeksforgeeks.org/javascript/" target="_blank">GeeksforGeeks JS</a></li>
+            <li><a href="https://stackblitz.com/" target="_blank">Try JS Online on StackBlitz</a></li>
           </ul>
         </div>
       </section>
@@ -143,17 +143,17 @@ export default function FrontendTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/Law7wfdg_ls"
+            src="https://www.youtube.com/embed/Law7wfdg_ls"
             title="React Hooks Full Course"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/9jULHSe41ls"
+            src="https://www.youtube.com/embed/9jULHSe41ls"
             title="React Performance Optimization"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/Dorf8i6lCuk"
+            src="https://www.youtube.com/embed/Dorf8i6lCuk"
             title="React Context & Redux Tutorial"
             allowFullScreen
           ></iframe>
@@ -162,10 +162,10 @@ export default function FrontendTutorials() {
         <div className="resources">
           <h3>📘 Recommended Links:</h3>
           <ul>
-            <li><a href="httpss://react.dev/learn" target="_blank">React Official Docs</a></li>
-            <li><a href="httpss://redux.js.org/" target="_blank">Redux Documentation</a></li>
-            <li><a href="httpss://reactrouter.com/en/main" target="_blank">React Router Docs</a></li>
-            <li><a href="httpss://codesandbox.io/s/new" target="_blank">Try React Online</a></li>
+            <li><a href="https://react.dev/learn" target="_blank">React Official Docs</a></li>
+            <li><a href="https://redux.js.org/" target="_blank">Redux Documentation</a></li>
+            <li><a href="https://reactrouter.com/en/main" target="_blank">React Router Docs</a></li>
+            <li><a href="https://codesandbox.io/s/new" target="_blank">Try React Online</a></li>
           </ul>
         </div>
       </section>
@@ -180,17 +180,17 @@ export default function FrontendTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/srvUrASNj0s"
+            src="https://www.youtube.com/embed/srvUrASNj0s"
             title="Responsive Design Tutorial"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/2TnsNFS9ptU"
+            src="https://www.youtube.com/embed/2TnsNFS9ptU"
             title="Deploy React Apps"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/UO4mx5u5S4Y"
+            src="https://www.youtube.com/embed/UO4mx5u5S4Y"
             title="Responsive Web Design & Accessibility"
             allowFullScreen
           ></iframe>
@@ -199,10 +199,10 @@ export default function FrontendTutorials() {
         <div className="resources">
           <h3>🧰 Tools & Platforms:</h3>
           <ul>
-            <li><a href="httpss://vercel.com/" target="_blank">Vercel Deployment</a></li>
-            <li><a href="httpss://www.netlify.com/" target="_blank">Netlify Hosting</a></li>
-            <li><a href="httpss://pages.github.com/" target="_blank">GitHub Pages</a></li>
-            <li><a href="httpss://www.freecodecamp.org/learn/responsive-web-design/" target="_blank">FreeCodeCamp Responsive Design</a></li>
+            <li><a href="https://vercel.com/" target="_blank">Vercel Deployment</a></li>
+            <li><a href="https://www.netlify.com/" target="_blank">Netlify Hosting</a></li>
+            <li><a href="https://pages.github.com/" target="_blank">GitHub Pages</a></li>
+            <li><a href="https://www.freecodecamp.org/learn/responsive-web-design/" target="_blank">FreeCodeCamp Responsive Design</a></li>
           </ul>
         </div>
       </section>

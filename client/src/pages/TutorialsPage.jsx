@@ -13,16 +13,16 @@ const tutorialsData = [
     icon: <FaReact color="#61dafb" size={30} />,
     description: "Master modern frontend technologies and best practices to build performant, scalable applications.",
     topics: ["React Hooks & Context", "Redux Advanced", "Next.js SSR/SSG", "Performance Optimization"],
-    featuredVideo: "httpss://www.youtube.com/embed/dGcsHMXbSOA",
-    codeSandbox: "httpss://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark",
+    featuredVideo: "https://www.youtube.com/embed/dGcsHMXbSOA",
+    codeSandbox: "https://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark",
   },
   {
     category: "Backend Advanced",
     icon: <FaNodeJs color="#68a063" size={30} />,
     description: "Deep dive into backend frameworks, database design, and security for robust APIs.",
     topics: ["Node.js Advanced", "Express Middleware", "MongoDB Aggregation", "JWT & OAuth2 Auth"],
-    featuredVideo: "httpss://www.youtube.com/embed/Oe421EPjeBE",
-    codeSandbox: "httpss://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark",
+    featuredVideo: "https://www.youtube.com/embed/Oe421EPjeBE",
+    codeSandbox: "https://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark",
   },
   // 💡 NEW ENTRY FOR ADVANCED TUTORIALS
   {
@@ -30,24 +30,24 @@ const tutorialsData = [
     icon: <FaDatabase color="#059669" size={30} />, 
     description: "Learn to design scalable, fault-tolerant systems and master advanced database concepts like indexing and scaling.",
     topics: ["Microservices Architecture", "Scaling & Load Balancing", "SQL/NoSQL Tradeoffs", "Database Indexing & Sharding"],
-    featuredVideo: "httpss://www.youtube.com/embed/YpX536-1uCg", // Placeholder
-    codeSandbox: "httpss://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark",
+    featuredVideo: "https://www.youtube.com/embed/YpX536-1uCg", // Placeholder
+    codeSandbox: "https://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark",
   },
   {
     category: "Fullstack Projects",
     icon: <FaProjectDiagram color="#f97316" size={30} />,
     description: "Build real-world projects integrating frontend and backend to showcase your skills.",
     topics: ["MERN E-commerce", "Real-time Chat App", "AI Integration Projects", "Portfolio Website"],
-    featuredVideo: "httpss://www.youtube.com/embed/7CqJlxBYj-M",
-    codeSandbox: "httpss://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark",
+    featuredVideo: "https://www.youtube.com/embed/7CqJlxBYj-M",
+    codeSandbox: "https://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark",
   },
   {
     category: "Other Professional Skills",
     icon: <FaCogs color="#6366f1" size={30} />,
     description: "Boost your professional profile with DevOps, testing, and version control mastery.",
     topics: ["Unit Testing & TDD", "CI/CD Pipeline", "Advanced Git", "Cloud Deployment Basics"],
-    featuredVideo: "httpss://www.youtube.com/embed/1Z5K6nR3p4Y",
-    codeSandbox: "httpss://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark",
+    featuredVideo: "https://www.youtube.com/embed/1Z5K6nR3p4Y",
+    codeSandbox: "https://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark",
   },
 ];
 

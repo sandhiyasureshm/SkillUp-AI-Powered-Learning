@@ -27,12 +27,12 @@ export default function SystemDesignTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/rv4LlmLmVWk"
+            src="https://www.youtube.com/embed/rv4LlmLmVWk"
             title="Microservices Architecture Explained"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/lL_j7ilk7rc"
+            src="https://www.youtube.com/embed/lL_j7ilk7rc"
             title="Microservices Explained in 5 Minutes"
             allowFullScreen
           ></iframe>
@@ -41,9 +41,9 @@ export default function SystemDesignTutorials() {
         <div className="resources">
           <h3>📚 Useful Links:</h3>
           <ul>
-            <li><a href="httpss://microservices.io/patterns/index.html" target="_blank">Microservices.io Patterns</a></li>
-            <li><a href="httpss://martinfowler.com/microservices/" target="_blank">Martin Fowler on Microservices</a></li>
-            <li><a href="httpss://www.nginx.com/blog/introduction-to-microservices/" target="_blank">NGINX Microservices Guide</a></li>
+            <li><a href="https://microservices.io/patterns/index.html" target="_blank">Microservices.io Patterns</a></li>
+            <li><a href="https://martinfowler.com/microservices/" target="_blank">Martin Fowler on Microservices</a></li>
+            <li><a href="https://www.nginx.com/blog/introduction-to-microservices/" target="_blank">NGINX Microservices Guide</a></li>
           </ul>
         </div>
       </section>
@@ -58,12 +58,12 @@ export default function SystemDesignTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/nHnSKgyftAw"
+            src="https://www.youtube.com/embed/nHnSKgyftAw"
             title="Load Balancing, Auto Scaling & High Availability"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/0mwgbiJae5Q"
+            src="https://www.youtube.com/embed/0mwgbiJae5Q"
             title="Auto Scaling and Load Balancing on AWS"
             allowFullScreen
           ></iframe>
@@ -72,9 +72,9 @@ export default function SystemDesignTutorials() {
         <div className="resources">
           <h3>🌐 Learning Links:</h3>
           <ul>
-            <li><a href="httpss://aws.amazon.com/architecture/scaling-your-application/" target="_blank">AWS Scaling Guide</a></li>
-            <li><a href="httpss://www.nginx.com/resources/glossary/load-balancing/" target="_blank">Load Balancing Concepts</a></li>
-            <li><a href="httpss://developer.mozilla.org/en-US/docs/Web/Performance" target="_blank">Performance & Optimization</a></li>
+            <li><a href="https://aws.amazon.com/architecture/scaling-your-application/" target="_blank">AWS Scaling Guide</a></li>
+            <li><a href="https://www.nginx.com/resources/glossary/load-balancing/" target="_blank">Load Balancing Concepts</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/Performance" target="_blank">Performance & Optimization</a></li>
           </ul>
         </div>
       </section>
@@ -89,12 +89,12 @@ export default function SystemDesignTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/ruz-vK8IesE"
+            src="https://www.youtube.com/embed/ruz-vK8IesE"
             title="SQL vs NoSQL Explained"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/1Ju5_PLDarg"
+            src="https://www.youtube.com/embed/1Ju5_PLDarg"
             title="Database Design Concepts"
             allowFullScreen
           ></iframe>
@@ -103,9 +103,9 @@ export default function SystemDesignTutorials() {
         <div className="resources">
           <h3>📘 Resources:</h3>
           <ul>
-            <li><a href="httpss://www.geeksforgeeks.org/sql-vs-nosql/" target="_blank">SQL vs NoSQL GFG</a></li>
-            <li><a href="httpss://www.mongodb.com/nosql-explained" target="_blank">MongoDB NoSQL Guide</a></li>
-            <li><a href="httpss://dev.mysql.com/doc/" target="_blank">MySQL Documentation</a></li>
+            <li><a href="https://www.geeksforgeeks.org/sql-vs-nosql/" target="_blank">SQL vs NoSQL GFG</a></li>
+            <li><a href="https://www.mongodb.com/nosql-explained" target="_blank">MongoDB NoSQL Guide</a></li>
+            <li><a href="https://dev.mysql.com/doc/" target="_blank">MySQL Documentation</a></li>
           </ul>
         </div>
       </section>
@@ -120,12 +120,12 @@ export default function SystemDesignTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/XP98YCr-iXQ"
+            src="https://www.youtube.com/embed/XP98YCr-iXQ"
             title="What is Database Sharding?"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/eQ3eNd5WbH8"
+            src="https://www.youtube.com/embed/eQ3eNd5WbH8"
             title="How Indexes Work in Distributed Databases"
             allowFullScreen
           ></iframe>
@@ -134,9 +134,9 @@ export default function SystemDesignTutorials() {
         <div className="resources">
           <h3>🔧 Learning Links:</h3>
           <ul>
-            <li><a href="httpss://www.mongodb.com/docs/manual/sharding/" target="_blank">MongoDB Sharding Docs</a></li>
-            <li><a href="httpss://www.postgresql.org/docs/current/indexes.html" target="_blank">PostgreSQL Indexing</a></li>
-            <li><a href="httpss://use-the-index-luke.com/" target="_blank">Query Optimization Guide</a></li>
+            <li><a href="https://www.mongodb.com/docs/manual/sharding/" target="_blank">MongoDB Sharding Docs</a></li>
+            <li><a href="https://www.postgresql.org/docs/current/indexes.html" target="_blank">PostgreSQL Indexing</a></li>
+            <li><a href="https://use-the-index-luke.com/" target="_blank">Query Optimization Guide</a></li>
           </ul>
         </div>
       </section>
@@ -151,12 +151,12 @@ export default function SystemDesignTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/i7twT3x5yv8"
+            src="https://www.youtube.com/embed/i7twT3x5yv8"
             title="System Design Interview: A Step-By-Step Guide"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/tj0NvyGNs3E"
+            src="https://www.youtube.com/embed/tj0NvyGNs3E"
             title="System Design Patterns"
             allowFullScreen
           ></iframe>
@@ -165,9 +165,9 @@ export default function SystemDesignTutorials() {
         <div className="resources">
           <h3>🛠️ Resources:</h3>
           <ul>
-            <li><a href="httpss://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a></li>
-            <li><a href="httpss://www.educative.io/courses/grokking-the-system-design-interview" target="_blank">Grokking System Design</a></li>
-            <li><a href="httpss://www.geeksforgeeks.org/system-design-tutorials/" target="_blank">GeeksforGeeks System Design</a></li>
+            <li><a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer</a></li>
+            <li><a href="https://www.educative.io/courses/grokking-the-system-design-interview" target="_blank">Grokking System Design</a></li>
+            <li><a href="https://www.geeksforgeeks.org/system-design-tutorials/" target="_blank">GeeksforGeeks System Design</a></li>
           </ul>
         </div>
       </section>

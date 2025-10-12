@@ -36,7 +36,7 @@ export default function FrontendAdvanced() {
             <iframe
               width="100%"
               height="250"
-              src="httpss://www.youtube.com/embed/dpw9EHDh2bM"
+              src="https://www.youtube.com/embed/dpw9EHDh2bM"
               title="React Hooks Tutorial"
               frameBorder="0"
               allowFullScreen
@@ -46,7 +46,7 @@ export default function FrontendAdvanced() {
           <div className="tutorial-live-code">
             <h3>Live Coding</h3>
             <iframe
-              src="httpss://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark"
+              src="https://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark"
               style={{ width: "100%", height: "250px" }}
               title="React Live Code"
               allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
@@ -74,7 +74,7 @@ export default function FrontendAdvanced() {
             <iframe
               width="100%"
               height="250"
-              src="httpss://www.youtube.com/embed/poQXNp9ItL4"
+              src="https://www.youtube.com/embed/poQXNp9ItL4"
               title="Redux Tutorial"
               frameBorder="0"
               allowFullScreen
@@ -84,7 +84,7 @@ export default function FrontendAdvanced() {
           <div className="tutorial-live-code">
             <h3>Live Coding</h3>
             <iframe
-              src="httpss://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark"
+              src="https://codesandbox.io/embed/new?fontsize=14&hidenavigation=1&theme=dark"
               style={{ width: "100%", height: "250px" }}
               title="Redux Live Code"
               allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"

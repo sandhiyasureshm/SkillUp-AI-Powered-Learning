@@ -27,12 +27,12 @@ export default function ProfessionalSkillsTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/7r4xVDI2vho"
+            src="https://www.youtube.com/embed/7r4xVDI2vho"
             title="Jest Unit Testing Tutorial 1"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/5XQOK0v_YRE"
+            src="https://www.youtube.com/embed/5XQOK0v_YRE"
             title="Jest Unit Testing Tutorial 2"
             allowFullScreen
           ></iframe>
@@ -49,12 +49,12 @@ export default function ProfessionalSkillsTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/f1wnYdLEpgI"
+            src="https://www.youtube.com/embed/f1wnYdLEpgI"
             title="CI/CD Pipeline Tutorial 1"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/1Q6jz7g5ZxQ"
+            src="https://www.youtube.com/embed/1Q6jz7g5ZxQ"
             title="CI/CD with GitHub Actions Tutorial 2"
             allowFullScreen
           ></iframe>
@@ -71,12 +71,12 @@ export default function ProfessionalSkillsTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/8JJ101D3knE"
+            src="https://www.youtube.com/embed/8JJ101D3knE"
             title="Git Tutorial 1"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/Uszj_k0DGsg"
+            src="https://www.youtube.com/embed/Uszj_k0DGsg"
             title="Git Tutorial 2"
             allowFullScreen
           ></iframe>
@@ -93,12 +93,12 @@ export default function ProfessionalSkillsTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="httpss://www.youtube.com/embed/fqMOX6JJhGo"
+            src="https://www.youtube.com/embed/fqMOX6JJhGo"
             title="Docker Tutorial 1"
             allowFullScreen
           ></iframe>
           <iframe
-            src="httpss://www.youtube.com/embed/3c-iBn73dDE"
+            src="https://www.youtube.com/embed/3c-iBn73dDE"
             title="Cloud Deployment Tutorial 2"
             allowFullScreen
           ></iframe>
@@ -115,12 +115,12 @@ export default function ProfessionalSkillsTutorials() {
 
        <div className="video-grid">
   <iframe
-    src="httpss://www.youtube.com/embed/tlB-WAR0j-U"
+    src="https://www.youtube.com/embed/tlB-WAR0j-U"
     title="Agile & Scrum Tutorial 1"
     allowFullScreen
   ></iframe>
   <iframe
-    src="httpss://www.youtube.com/embed/-tqHyAGOoAM"
+    src="https://www.youtube.com/embed/-tqHyAGOoAM"
     title="Team Collaboration & Scrum Tutorial 2"
     allowFullScreen
   ></iframe>
