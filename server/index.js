@@ -15,20 +15,35 @@ const otpRoute = require("./routes/otpRoute");
 const app = express();
 
 // ----------------------
-// CORS Configuration
+// CORS Configuration (The constant solution)
 // ----------------------
 
-// 🎯 FIX: Define all allowed origins, including your local and production Vercel URLs.
 const allowedOrigins = [
-    'http://localhost:5173', // Local Development (must be http)
-    // Add all Vercel Preview URLs here as they are created
-    'https://skill-up-ai-powered-learning-t6v2.vercel.app', // Previous Vercel deployment URL
-    'https://skill-up-ai-powered-learning-rm3o.vercel.app', // NEW Vercel deployment URL from the error
-    'https://skill-up-ai-powered-learning.vercel.app'      // Main Vercel project domain (if different)
+    'http://localhost:5173', // Must be HTTP for local development
+    'https://skill-up-ai-powered-learning.vercel.app', // Your primary Vercel domain
 ];
 
 const corsOptions = {
-    origin: allowedOrigins, // Use the array of allowed origins
+    // 🎯 Use a function to dynamically allow Vercel preview domains
+    origin: (origin, callback) => {
+        // 1. Allow if the origin is in the explicitly approved list (localhost or main domain)
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } 
+        // 2. Allow if the origin is a Vercel preview domain (ends with .vercel.app)
+        else if (origin && /\.vercel\.app$/.test(origin)) {
+            callback(null, true);
+        }
+        // 3. Allow requests with no origin (like mobile apps, testing tools, or direct server access)
+        else if (!origin) {
+             callback(null, true);
+        }
+        // 4. Block all others
+        else {
+            console.log(`CORS Policy: Blocking request from origin ${origin}`);
+            callback(new Error(`Not allowed by CORS: ${origin}`), false);
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true
 };
