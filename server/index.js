@@ -21,7 +21,9 @@ const app = express();
 // 🎯 FIX: Define all allowed origins, including your local and production Vercel URLs.
 const allowedOrigins = [
     'http://localhost:5173', // Local Development (must be http)
-    'https://skill-up-ai-powered-learning-t6v2.vercel.app', // Current Vercel deployment URL
+    // Add all Vercel Preview URLs here as they are created
+    'https://skill-up-ai-powered-learning-t6v2.vercel.app', // Previous Vercel deployment URL
+    'https://skill-up-ai-powered-learning-rm3o.vercel.app', // NEW Vercel deployment URL from the error
     'https://skill-up-ai-powered-learning.vercel.app'      // Main Vercel project domain (if different)
 ];
 
