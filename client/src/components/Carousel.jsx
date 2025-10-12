@@ -5,7 +5,7 @@ import "../styles/Home.css";
 import courseImg from "../assets/course.png";
 import aptitudeImg from "../assets/test.jpg";
 import jobsImg from "../assets/job.jpg";
-import govImg from "../assets/gov.jpg";
+import govImg from "../assets/Gov.jpg";
 
 
 export default function Carousel() {
