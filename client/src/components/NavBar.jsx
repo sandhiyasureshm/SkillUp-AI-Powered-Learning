@@ -92,10 +92,10 @@ export default function NavBar() {
       try {
         const [coursesRes, tutorialsRes, practiceRes, examsRes] =
           await Promise.all([
-            axios.get("http://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/courses"),
-            axios.get("http://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/tutorials"),
-            axios.get("http://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/practice"),
-            axios.get("http://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/exams"),
+            axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/courses"),
+            axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/tutorials"),
+            axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/practice"),
+            axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/exams"),
           ]);
 
         setDropdownData({

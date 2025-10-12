@@ -29,12 +29,12 @@ export default function FullstackTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="https://www.youtube.com/embed/el5bTI6GBQ8"
+            src="httpss://www.youtube.com/embed/el5bTI6GBQ8"
             title="MERN E-Commerce Project Tutorial 1"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/SLauY6PpjW4"
+            src="httpss://www.youtube.com/embed/SLauY6PpjW4"
             title="MERN E-Commerce Project Tutorial 2"
             allowFullScreen
           ></iframe>
@@ -51,12 +51,12 @@ export default function FullstackTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="https://www.youtube.com/embed/SGQM7PU9hzI"
+            src="httpss://www.youtube.com/embed/SGQM7PU9hzI"
             title="Socket.io Chat App Tutorial 1"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/ba4T590JPnw"
+            src="httpss://www.youtube.com/embed/ba4T590JPnw"
             title="Socket.io Chat App Tutorial 2"
             allowFullScreen
           ></iframe>
@@ -73,12 +73,12 @@ export default function FullstackTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="https://www.youtube.com/embed/1d0r2HfReo4"
+            src="httpss://www.youtube.com/embed/1d0r2HfReo4"
             title="OpenAI API Integration Tutorial 1"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/te6y-xVteyY"
+            src="httpss://www.youtube.com/embed/te6y-xVteyY"
             title="OpenAI API Integration Tutorial 2"
             allowFullScreen
           ></iframe>
@@ -95,12 +95,12 @@ export default function FullstackTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="https://www.youtube.com/embed/rTYFjciPgXU"
+            src="httpss://www.youtube.com/embed/rTYFjciPgXU"
             title="Portfolio Website Fullstack Tutorial 1"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/TzE2eK-HpC0"
+            src="httpss://www.youtube.com/embed/TzE2eK-HpC0"
             title="Portfolio Website Fullstack Tutorial 2"
             allowFullScreen
           ></iframe>
@@ -117,12 +117,12 @@ export default function FullstackTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="https://www.youtube.com/embed/ThdRFzHh7L0"
+            src="httpss://www.youtube.com/embed/ThdRFzHh7L0"
             title="MERN Error Handling & Deployment Tutorial 1"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/K4R9zK3JJ6g"
+            src="httpss://www.youtube.com/embed/K4R9zK3JJ6g"
             title="MERN Error Handling & Deployment Tutorial 2"
             allowFullScreen
           ></iframe>

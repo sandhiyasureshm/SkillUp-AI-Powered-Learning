@@ -28,17 +28,17 @@ export default function BackendTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="https://www.youtube.com/embed/Oe421EPjeBE"
+            src="httpss://www.youtube.com/embed/Oe421EPjeBE"
             title="Advanced Node.js Tutorial"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/TlB_eWDSMt4"
+            src="httpss://www.youtube.com/embed/TlB_eWDSMt4"
             title="Node.js Async Patterns & Event Loop"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/1z0-6K3a7Hk"
+            src="httpss://www.youtube.com/embed/1z0-6K3a7Hk"
             title="Node.js Streams & Performance"
             allowFullScreen
           ></iframe>
@@ -47,9 +47,9 @@ export default function BackendTutorials() {
         <div className="resources">
           <h3>📚 Useful Resources:</h3>
           <ul>
-            <li><a href="https://nodejs.org/en/docs/" target="_blank">Node.js Official Docs</a></li>
-            <li><a href="https://www.freecodecamp.org/news/node-js-tutorial-for-beginners/" target="_blank">FreeCodeCamp Node.js Guide</a></li>
-            <li><a href="https://nodeschool.io/" target="_blank">NodeSchool Interactive Tutorials</a></li>
+            <li><a href="httpss://nodejs.org/en/docs/" target="_blank">Node.js Official Docs</a></li>
+            <li><a href="httpss://www.freecodecamp.org/news/node-js-tutorial-for-beginners/" target="_blank">FreeCodeCamp Node.js Guide</a></li>
+            <li><a href="httpss://nodeschool.io/" target="_blank">NodeSchool Interactive Tutorials</a></li>
           </ul>
         </div>
       </section>
@@ -64,17 +64,17 @@ export default function BackendTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="https://www.youtube.com/embed/L72fhGm1tfE"
+            src="httpss://www.youtube.com/embed/L72fhGm1tfE"
             title="Express.js Advanced"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/gnsO8-xJ8rs"
+            src="httpss://www.youtube.com/embed/gnsO8-xJ8rs"
             title="Express Middleware & Routing"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/pKd0Rpw7O48"
+            src="httpss://www.youtube.com/embed/pKd0Rpw7O48"
             title="Express.js Project Structure"
             allowFullScreen
           ></iframe>
@@ -83,9 +83,9 @@ export default function BackendTutorials() {
         <div className="resources">
           <h3>📘 Learning Links:</h3>
           <ul>
-            <li><a href="https://expressjs.com/en/guide/writing-middleware.html" target="_blank">Express Middleware Guide</a></li>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs" target="_blank">MDN Express Guide</a></li>
-            <li><a href="https://www.geeksforgeeks.org/node-js-express-js-introduction/" target="_blank">GeeksforGeeks Express</a></li>
+            <li><a href="httpss://expressjs.com/en/guide/writing-middleware.html" target="_blank">Express Middleware Guide</a></li>
+            <li><a href="httpss://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs" target="_blank">MDN Express Guide</a></li>
+            <li><a href="httpss://www.geeksforgeeks.org/node-js-express-js-introduction/" target="_blank">GeeksforGeeks Express</a></li>
           </ul>
         </div>
       </section>
@@ -100,17 +100,17 @@ export default function BackendTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="https://www.youtube.com/embed/OFjq7ihZ6jI"
+            src="httpss://www.youtube.com/embed/OFjq7ihZ6jI"
             title="MongoDB Aggregation Tutorial"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/pWbMrx5rVBE"
+            src="httpss://www.youtube.com/embed/pWbMrx5rVBE"
             title="MongoDB Advanced Concepts"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/EE8ZT1lO8tY"
+            src="httpss://www.youtube.com/embed/EE8ZT1lO8tY"
             title="MongoDB Indexing & Optimization"
             allowFullScreen
           ></iframe>
@@ -119,9 +119,9 @@ export default function BackendTutorials() {
         <div className="resources">
           <h3>🌐 Useful Links:</h3>
           <ul>
-            <li><a href="https://www.mongodb.com/docs/" target="_blank">MongoDB Official Docs</a></li>
-            <li><a href="https://www.mongodb.com/try/download/community" target="_blank">Download & Try MongoDB</a></li>
-            <li><a href="https://www.w3schools.com/mongodb/" target="_blank">W3Schools MongoDB</a></li>
+            <li><a href="httpss://www.mongodb.com/docs/" target="_blank">MongoDB Official Docs</a></li>
+            <li><a href="httpss://www.mongodb.com/try/download/community" target="_blank">Download & Try MongoDB</a></li>
+            <li><a href="httpss://www.w3schools.com/mongodb/" target="_blank">W3Schools MongoDB</a></li>
           </ul>
         </div>
       </section>
@@ -136,17 +136,17 @@ export default function BackendTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="https://www.youtube.com/embed/mbsmsi7l3r4"
+            src="httpss://www.youtube.com/embed/mbsmsi7l3r4"
             title="JWT Authentication Node.js"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/7nafaH9SddU"
+            src="httpss://www.youtube.com/embed/7nafaH9SddU"
             title="OAuth2 & Social Logins"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/N3AkSS5hXMA"
+            src="httpss://www.youtube.com/embed/N3AkSS5hXMA"
             title="Node.js Security Best Practices"
             allowFullScreen
           ></iframe>
@@ -155,9 +155,9 @@ export default function BackendTutorials() {
         <div className="resources">
           <h3>🔐 Useful Links:</h3>
           <ul>
-            <li><a href="https://jwt.io/introduction/" target="_blank">JWT Official Guide</a></li>
-            <li><a href="https://oauth.net/2/" target="_blank">OAuth2 Protocol</a></li>
-            <li><a href="https://www.npmjs.com/package/bcrypt" target="_blank">Bcrypt Password Hashing</a></li>
+            <li><a href="httpss://jwt.io/introduction/" target="_blank">JWT Official Guide</a></li>
+            <li><a href="httpss://oauth.net/2/" target="_blank">OAuth2 Protocol</a></li>
+            <li><a href="httpss://www.npmjs.com/package/bcrypt" target="_blank">Bcrypt Password Hashing</a></li>
           </ul>
         </div>
       </section>
@@ -172,12 +172,12 @@ export default function BackendTutorials() {
 
         <div className="video-grid">
           <iframe
-            src="https://www.youtube.com/embed/2v4LZZbO9rQ"
+            src="httpss://www.youtube.com/embed/2v4LZZbO9rQ"
             title="Node.js Error Handling"
             allowFullScreen
           ></iframe>
           <iframe
-            src="https://www.youtube.com/embed/rzD1b8dC1TA"
+            src="httpss://www.youtube.com/embed/rzD1b8dC1TA"
             title="Logging Strategies Node.js"
             allowFullScreen
           ></iframe>
@@ -186,9 +186,9 @@ export default function BackendTutorials() {
         <div className="resources">
           <h3>🛠️ Learning Resources:</h3>
           <ul>
-            <li><a href="https://expressjs.com/en/guide/error-handling.html" target="_blank">Express Error Handling</a></li>
-            <li><a href="https://github.com/winstonjs/winston" target="_blank">Winston Logger</a></li>
-            <li><a href="https://www.npmjs.com/package/morgan" target="_blank">Morgan Request Logger</a></li>
+            <li><a href="httpss://expressjs.com/en/guide/error-handling.html" target="_blank">Express Error Handling</a></li>
+            <li><a href="httpss://github.com/winstonjs/winston" target="_blank">Winston Logger</a></li>
+            <li><a href="httpss://www.npmjs.com/package/morgan" target="_blank">Morgan Request Logger</a></li>
           </ul>
         </div>
       </section>

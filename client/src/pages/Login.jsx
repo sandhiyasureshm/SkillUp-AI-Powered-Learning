@@ -25,7 +25,7 @@ export default function Login() {
     setLoading(true);
     setMessage("");
     try {
-      const res = await fetch("http://skillup-ai-powered-learning-1.onrender.com/login", {
+      const res = await fetch("https://skillup-ai-powered-learning-1.onrender.com/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -52,7 +52,7 @@ export default function Login() {
     setLoading(true);
     setMessage("");
     try {
-      const res = await fetch("http://skillup-ai-powered-learning-1.onrender.com/api/send-otp", {
+      const res = await fetch("https://skillup-ai-powered-learning-1.onrender.com/api/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -76,7 +76,7 @@ export default function Login() {
     setLoading(true);
     setMessage("");
     try {
-      const res = await fetch("http://skillup-ai-powered-learning-1.onrender.com/api/verify-otp", {
+      const res = await fetch("https://skillup-ai-powered-learning-1.onrender.com/api/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
@@ -100,7 +100,7 @@ export default function Login() {
     setLoading(true);
     setMessage('');
     try {
-      const res = await fetch("http://skillup-ai-powered-learning-1.onrender.com/api/send-otp", {
+      const res = await fetch("https://skillup-ai-powered-learning-1.onrender.com/api/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -121,7 +121,7 @@ export default function Login() {
     setLoading(true);
     setMessage('');
     try {
-      const res = await fetch("http://skillup-ai-powered-learning-1.onrender.com/api/verify-otp", {
+      const res = await fetch("https://skillup-ai-powered-learning-1.onrender.com/api/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
@@ -153,7 +153,7 @@ const handleResetPassword = async () => {
   setMessage('');
 
   try {
-    const res = await fetch("http://skillup-ai-powered-learning-1.onrender.com/api/reset-password", {
+    const res = await fetch("https://skillup-ai-powered-learning-1.onrender.com/api/reset-password", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, otp, newPassword }), // send OTP along with email and newPassword
