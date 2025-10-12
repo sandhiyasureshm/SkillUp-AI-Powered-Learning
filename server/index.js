@@ -17,11 +17,20 @@ const app = express();
 // ----------------------
 // CORS Configuration
 // ----------------------
+
+// 🎯 FIX: Define all allowed origins, including your local and production Vercel URLs.
+const allowedOrigins = [
+    'http://localhost:5173', // Local Development (must be http)
+    'https://skill-up-ai-powered-learning-t6v2.vercel.app', // Current Vercel deployment URL
+    'https://skill-up-ai-powered-learning.vercel.app'      // Main Vercel project domain (if different)
+];
+
 const corsOptions = {
-    origin: 'http://localhost:5173', // Frontend URL
+    origin: allowedOrigins, // Use the array of allowed origins
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true
 };
+
 const forgotPasswordRoutes = require('./routes/forgotPasswordRoutes');
 app.use('/api', forgotPasswordRoutes);
 
@@ -46,10 +55,10 @@ app.use('/courses', require('./routes/courseRoutes'));
 app.use('/api/jobs', require('./routes/jobs'));
 
 // AI Practice Routes
-// Coding routes will be accessed via: http://skillup-ai-powered-learning-1.onrender.com/api/coding/...
+// Coding routes will be accessed via: https://skillup-ai-powered-learning-1.onrender.com/api/coding/...
 app.use('/api/coding', codingRoutes); 
 
-// Mock Interview routes will be accessed via: http://skillup-ai-powered-learning-1.onrender.com/api/mock/generate-interview
+// Mock Interview routes will be accessed via: https://skillup-ai-powered-learning-1.onrender.com/api/mock/generate-interview
 // This replaces the incorrect lines you had commented out.
 app.use('/api/mock', mockInterviewRoutes); 
 app.use('/api/users', userRoutes);
@@ -60,111 +69,111 @@ app.use("/api", otpRoute);
 // MongoDB Connection
 // ----------------------
 mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/AI_Mock", {
-    // These options are often unnecessary in newer Mongoose versions but don't hurt
-    // useNewUrlParser: true, 
-    // useUnifiedTopology: true,
+    // These options are often unnecessary in newer Mongoose versions but don't hurt
+    // useNewUrlParser: true, 
+    // useUnifiedTopology: true,
 })
-    .then(() => console.log("✅ MongoDB connected successfully"))
-    .catch((err) => console.error("❌ MongoDB connection error:", err));
+    .then(() => console.log("✅ MongoDB connected successfully"))
+    .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 
 // ----------------------
 // User Authentication & Interests (No changes needed)
 // ----------------------
 app.post('/reg', async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
-        if (!name || !email || !password) return res.status(400).json({ message: "All fields are required" });
+    try {
+        const { name, email, password } = req.body;
+        if (!name || !email || !password) return res.status(400).json({ message: "All fields are required" });
 
-        const existingUser = await Signup.findOne({ email });
-        if (existingUser) return res.status(400).json({ message: "Email already exists" });
+        const existingUser = await Signup.findOne({ email });
+        if (existingUser) return res.status(400).json({ message: "Email already exists" });
 
-        const newUser = new Signup({ name, email, password, interestedCourses: [] });
-        await newUser.save();
-        res.status(201).json({ message: "User registered successfully", user: newUser });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error", error });
-    }
+        const newUser = new Signup({ name, email, password, interestedCourses: [] });
+        await newUser.save();
+        res.status(201).json({ message: "User registered successfully", user: newUser });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error", error });
+    }
 });
 
 app.post('/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        if (!email || !password) return res.status(400).json({ message: "Email and password are required" });
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) return res.status(400).json({ message: "Email and password are required" });
 
-        // 1. Fetch user (ensure 'name' is being fetched)
-        const user = await Signup.findOne({ email });
-        
-        if (!user) return res.status(400).json({ message: "Login failed: User does not exist" });
-        
-        // **CRITICAL NOTE:** Storing plain passwords like this is highly insecure. 
-        // Always use bcrypt or a similar library to hash passwords.
-        if (user.password !== password) return res.status(400).json({ message: "Login failed: Incorrect password" });
+        // 1. Fetch user (ensure 'name' is being fetched)
+        const user = await Signup.findOne({ email });
+        
+        if (!user) return res.status(400).json({ message: "Login failed: User does not exist" });
+        
+        // **CRITICAL NOTE:** Storing plain passwords like this is highly insecure. 
+        // Always use bcrypt or a similar library to hash passwords.
+        if (user.password !== password) return res.status(400).json({ message: "Login failed: Incorrect password" });
 
-        // 2. Explicitly create the payload to send to the frontend (Best Practice)
-        const userPayload = {
-            _id: user._id, 
-            email: user.email,
-            // 🎯 Check if 'name' exists on the Mongoose document. If it is null/undefined, this is the root cause.
-            name: user.name || user.username || 'User' // Use a fallback name if 'user.name' is missing
-        };
+        // 2. Explicitly create the payload to send to the frontend (Best Practice)
+        const userPayload = {
+            _id: user._id, 
+            email: user.email,
+            // 🎯 Check if 'name' exists on the Mongoose document. If it is null/undefined, this is the root cause.
+            name: user.name || user.username || 'User' // Use a fallback name if 'user.name' is missing
+        };
 
-        // 3. Send the clean and structured user object
-        res.status(200).json({ message: "Login successful", user: userPayload });
-        
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error", error });
-    }
+        // 3. Send the clean and structured user object
+        res.status(200).json({ message: "Login successful", user: userPayload });
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error", error });
+    }
 });
 
 app.post('/add-interest', async (req, res) => {
-    try {
-        const { userId, courseId } = req.body;
-        if (!userId || !courseId) return res.status(400).json({ message: "User ID and Course ID are required" });
+    try {
+        const { userId, courseId } = req.body;
+        if (!userId || !courseId) return res.status(400).json({ message: "User ID and Course ID are required" });
 
-        const user = await Signup.findById(userId);
-        if (!user) return res.status(404).json({ message: "User not found" });
+        const user = await Signup.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
 
-        if (!user.interestedCourses.includes(courseId)) {
-            user.interestedCourses.push(courseId);
-            await user.save();
-            return res.status(200).json({ message: "Course added to interested list" });
-        }
-        res.status(409).json({ message: "Course already in interested list" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error" });
-    }
+        if (!user.interestedCourses.includes(courseId)) {
+            user.interestedCourses.push(courseId);
+            await user.save();
+            return res.status(200).json({ message: "Course added to interested list" });
+        }
+        res.status(409).json({ message: "Course already in interested list" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
+    }
 });
 
 app.get('/get-interests/:userId', async (req, res) => {
-    try {
-        const user = await Signup.findById(req.params.userId).populate('interestedCourses');
-        if (!user) return res.status(404).json({ message: "User not found" });
-        res.status(200).json({ interestedCourses: user.interestedCourses });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error" });
-    }
+    try {
+        const user = await Signup.findById(req.params.userId).populate('interestedCourses');
+        if (!user) return res.status(404).json({ message: "User not found" });
+        res.status(200).json({ interestedCourses: user.interestedCourses });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
+    }
 });
 
 app.post('/remove-interest', async (req, res) => {
-    try {
-        const { userId, courseId } = req.body;
-        if (!userId || !courseId) return res.status(400).json({ message: "User ID and Course ID are required" });
+    try {
+        const { userId, courseId } = req.body;
+        if (!userId || !courseId) return res.status(400).json({ message: "User ID and Course ID are required" });
 
-        const user = await Signup.findById(userId);
-        if (!user) return res.status(404).json({ message: "User not found" });
+        const user = await Signup.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
 
-        user.interestedCourses = user.interestedCourses.filter(c => c.toString() !== courseId);
-        await user.save();
-        res.status(200).json({ message: "Course removed from interested list" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error" });
-    }
+        user.interestedCourses = user.interestedCourses.filter(c => c.toString() !== courseId);
+        await user.save();
+        res.status(200).json({ message: "Course removed from interested list" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
+    }
 });
 
 // ----------------------
@@ -172,5 +181,5 @@ app.post('/remove-interest', async (req, res) => {
 // ----------------------
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
+    console.log(`🚀 Server running at https://localhost:${PORT}`);
 });
