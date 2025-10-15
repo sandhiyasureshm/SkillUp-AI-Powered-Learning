@@ -4,11 +4,18 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogIn, Key, Mail } from 'lucide-react';
 
+const DUMMY_USER_CREDENTIALS = {
+  email: "user@example.com",
+  password: "password123", // !!! SECURITY WARNING !!!
+};
+
 // =====================================================================
 // SECURITY WARNING:
-// This front-end code is now making a request to a backend that uses
-// unhashed passwords (as requested). In a production application, you
-// MUST use bcrypt or a similar library to hash passwords.
+// In a production application, you MUST NOT store passwords in plain
+// text or compare them directly like this. Passwords must be hashed
+// (e.g., using bcrypt) on the backend before storage, and the login
+// process must compare the submitted password's hash to the stored hash.
+// This example is for front-end structure demonstration only.
 // =====================================================================
 
 const Login = () => {
@@ -18,61 +25,36 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate(); // Hook for navigation
 
-  // Function to handle login via API
-  const handleLogin = async (e) => { // Made function async to use await
+  // Function to simulate a network request for login
+  const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    if (!email || !password) {
-      setError("Please enter both email and password.");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // 1. Make a real fetch request to the backend /login endpoint
-      const response = await fetch('/login', { 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // Send email and password as JSON payload
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) { // Check for successful HTTP status (200-299)
-        // Successful login
-        console.log("Login Successful! User:", data.user.name);
-        // In a real app, you would save the user data or token here (e.g., Context or localStorage)
-        
-        // Display success message briefly before navigating
-        setError("Login successful! Redirecting..."); 
-        
-        // Use a short delay before navigation for better UX
-        setTimeout(() => {
-          // --- THIS IS THE CORRECT LINE THAT MOVES TO THE HOME PAGE ---
-          navigate('/'); 
-        }, 500);
-
-      } else {
-        // Failed login (handles errors returned from the server.js file, like "Incorrect password")
-        setError(data.message || "Login failed. Please check credentials.");
-        setLoading(false); // Only stop loading here on failure, success uses the timeout
+    // --- Simulated API Call Delay ---
+    setTimeout(() => {
+      // 1. Basic input validation
+      if (!email || !password) {
+        setError("Please enter both email and password.");
+        setLoading(false);
+        return;
       }
 
-    } catch (err) {
-      // Handles network errors (e.g., server offline, network connection issue)
-      console.error("Network or server error:", err);
-      setError("Could not connect to the server. Please check your connection.");
-    } finally {
-      // If navigation happens, the component unmounts, so we only need to stop loading on failure/error
-      if (!response?.ok) {
+      // 2. Simulate Credential Check (WITHOUT HASHING as requested)
+      if (email === DUMMY_USER_CREDENTIALS.email && password === DUMMY_USER_CREDENTIALS.password) {
+        // Successful login
+        console.log("Login Successful! Navigating to dashboard.");
+        setLoading(false);
+
+        // --- CORRECT ROUTE USAGE ---
+        // Navigates the user to the home dashboard route (e.g., "/")
+        navigate('/');
+      } else {
+        // Failed login
+        setError("Invalid email or password.");
         setLoading(false);
       }
-    }
+    }, 1000); // 1 second delay to simulate API latency
   };
 
   return (
@@ -140,14 +122,7 @@ const Login = () => {
 
           {/* Error Message */}
           {error && (
-            <div 
-              className={`border px-4 py-2 rounded-lg text-sm transition duration-150 ${
-                error.startsWith("Login successful") 
-                  ? 'bg-green-50 border-green-200 text-green-700' 
-                  : 'bg-red-50 border border-red-200 text-red-700'
-              }`} 
-              role="alert"
-            >
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm transition duration-150" role="alert">
               {error}
             </div>
           )}

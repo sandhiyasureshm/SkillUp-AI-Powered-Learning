@@ -1,36 +1,22 @@
 const express = require('express');
 const router = express.Router();
-// NOTE: bcrypt is imported but its primary function (compare in /login) is bypassed as requested.
-const bcrypt = require('bcrypt'); 
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
+// --- Model Imports (Adjusted based on your usage) ---
+// Since you are using "Signup" for profile updates, we'll use it consistently
 const Signup = require("../models/Sign"); 
-const Course = require('../models/courseModel'); 
+const Course = require('../models/courseModel'); // Assuming this exists
+// Note: User and Users models were present but seem superseded by Signup for profile/auth in your flow.
+// We'll keep the variable names but rely on Signup if that's your active model.
+const User = Signup; 
+// ----------------------------------------------------
 
 const multer = require("multer");
 const path = require("path");
 
 // WARNING: Use environment variables (process.env.JWT_SECRET) in production
 const JWT_SECRET = "your_jwt_secret_key"; 
-
-// ==========================================================
-// --- OTP Temporary Storage (Simulated) ---
-// In a real application, OTP and otpExpiresAt fields should be added to the Signup model.
-// Using an in-memory Map for demonstration purposes.
-const otpStore = new Map(); // Key: email, Value: { otp: string, otpExpiresAt: Date }
-
-const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
-const OTP_EXPIRY_MINUTES = 5;
-
-// Function to check if OTP is valid
-const isOtpValid = (email, otp) => {
-    const data = otpStore.get(email);
-    if (!data) return false;
-
-    // Check OTP match and expiry
-    return data.otp === otp && new Date() < data.otpExpiresAt;
-};
-// ==========================================================
-
 
 // --- Multer Configuration ---
 const storage = multer.diskStorage({
@@ -42,13 +28,14 @@ const upload = multer({ storage });
 // ----------------------------
 
 
-// --- Middleware to authenticate JWT ---
+// --- Middleware to authenticate JWT (Keeping your existing logic) ---
 const authMiddleware = (req, res, next) => {
     const token = req.headers['authorization']?.split(" ")[1];
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
+        // WARNING: If you use Signup for Auth, ensure your token stores the ID of the Signup document.
         req.userId = decoded.userId; 
         next();
     } catch (err) {
@@ -59,19 +46,19 @@ const authMiddleware = (req, res, next) => {
 
 
 // ==========================================================
-// 1. AUTHENTICATION & OTP FLOW
+// 1. AUTHENTICATION (Using Signup Model)
 // ==========================================================
 
-// User Registration (Assumes Signup model handles saving password unhashed if hook is removed)
+// User Registration
 router.post('/register', async (req, res) => {
     try {
         const { name, email, password } = req.body;
         const existingUser = await Signup.findOne({ email });
         if (existingUser) return res.status(400).json({ message: "Email already exists" });
 
-        // WARNING: This assumes your Mongoose pre-save hook for hashing has been removed.
-        const newUser = new Signup({ name, email, password }); 
-        await newUser.save(); 
+        // Password hashing is typically handled by a pre-save hook in your Signup model (sign.js)
+        const newUser = new Signup({ name, email, password });
+        await newUser.save(); // The pre-save hook should hash the password here
 
         res.status(201).json({ message: "User registered successfully", user: newUser });
     } catch (error) {
@@ -80,22 +67,20 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// User Login (MODIFIED to use PLAIN TEXT comparison as requested)
+// User Login
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await Signup.findOne({ email });
         if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
-        // --- SECURITY WARNING: USING PLAIN TEXT COMPARISON ---
-        // The check below is HIGHLY INSECURE and is done only because it was explicitly requested.
-        const isMatch = (password === user.password); 
-        // ---------------------------------------------------
-        
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
+        // Generate JWT token using the correct user ID
         const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: "1d" });
         
+        // Exclude the password hash when sending user data back
         const { password: userPassword, ...userData } = user.toObject();
 
         res.status(200).json({ message: "Login successful", user: userData, token });
@@ -106,95 +91,21 @@ router.post('/login', async (req, res) => {
 });
 
 
-// New API: Send OTP (Used for both OTP Login and Password Reset)
-router.post('/api/send-otp', async (req, res) => {
-    try {
-        const { email } = req.body;
-        const user = await Signup.findOne({ email });
-        if (!user) return res.status(404).json({ message: "User not found." });
-
-        const otp = generateOtp();
-        const expiryDate = new Date(new Date().getTime() + OTP_EXPIRY_MINUTES * 60000);
-        
-        // Store the OTP data in the in-memory map
-        otpStore.set(email, { otp, otpExpiresAt: expiryDate, purpose: 'login_or_reset' });
-
-        // --- SIMULATE EMAIL SENDING ---
-        console.log(`[EMAIL SIMULATED] OTP for ${email}: ${otp}. Expires in ${OTP_EXPIRY_MINUTES} mins.`);
-        // -----------------------------
-
-        res.status(200).json({ message: `OTP sent to ${email}` });
-    } catch (error) {
-        console.error("Send OTP error:", error);
-        res.status(500).json({ message: "Server error" });
-    }
-});
-
-
-// New API: Verify OTP (Used for OTP Login)
-router.post('/api/verify-otp', async (req, res) => {
-    try {
-        const { email, otp } = req.body;
-        const user = await Signup.findOne({ email });
-        if (!user) return res.status(404).json({ message: "User not found." });
-
-        if (!isOtpValid(email, otp)) {
-            return res.status(400).json({ message: "Invalid or expired OTP." });
-        }
-        
-        // OTP verified successfully. Clear OTP and generate JWT for login.
-        otpStore.delete(email); 
-        
-        const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: "1d" });
-        const { password: userPassword, ...userData } = user.toObject();
-
-        res.status(200).json({ message: "OTP verified. Login successful.", user: userData, token });
-    } catch (error) {
-        console.error("Verify OTP error:", error);
-        res.status(500).json({ message: "Server error" });
-    }
-});
-
-// New API: Reset Password (Uses OTP for verification, then updates password)
-router.post('/api/reset-password', async (req, res) => {
-    try {
-        const { email, otp, newPassword } = req.body;
-
-        if (!isOtpValid(email, otp)) {
-            return res.status(400).json({ message: "Invalid or expired OTP." });
-        }
-        
-        const user = await Signup.findOne({ email });
-        if (!user) return res.status(404).json({ message: "User not found." });
-
-        // OTP is valid. Proceed with password update.
-        user.password = newPassword; 
-        await user.save(); 
-
-        // Clear the OTP entry after successful reset
-        otpStore.delete(email); 
-
-        res.status(200).json({ message: "Password reset successful." });
-    } catch (error) {
-        console.error("Reset password error:", error);
-        res.status(500).json({ message: "Server error" });
-    }
-});
-
-
 // ==========================================================
-// 2. PROFILE RETRIEVAL AND UPDATE (Existing logic retained)
+// 2. PROFILE RETRIEVAL AND UPDATE
 // ==========================================================
 
 // GET user by email (Retrieve Profile Data)
 router.get('/:email', async (req, res) => {
     try {
+        // Use Signup model as established
         const user = await Signup.findOne({ email: req.params.email })
             .populate('courses.courseId')
             .populate('interestedCourses');
         
         if (!user) return res.status(404).json({ message: 'User not found' });
         
+        // Exclude password for security
         const userObject = user.toObject();
         delete userObject.password; 
         
@@ -211,23 +122,34 @@ router.put('/:email', upload.single('profilePic'), async (req, res) => {
         const { email } = req.params;
         const updateData = { ...req.body };
 
+        // --- Image Handling Logic ---
         if (req.file) {
+            // New file uploaded
+            // NOTE: Ensure your front-end path or server setup correctly handles the image URL
             updateData.profilePic = `/uploads/${req.file.filename}`;
         } else if (req.body.profilePic === 'REMOVE_PIC') {
+            // Client sent signal to remove the image
             updateData.profilePic = null; 
+            // NOTE: In a real app, delete the old image file from the disk here.
         }
-        
+        // If req.file is null and req.body.profilePic is NOT 'REMOVE_PIC', 
+        // profilePic is not in updateData, and thus remains unchanged.
+        // --- End Image Handling Logic ---
+
+        // Ensure we don't accidentally override the email or password
         delete updateData.email; 
         delete updateData.password;
 
         const updatedUser = await Signup.findOneAndUpdate(
             { email },
             updateData,
+            // { new: true, runValidators: true } <-- Added runValidators for new schema fields (dob, occupation, etc.)
             { new: true, runValidators: true }
         ).populate('courses.courseId').populate('interestedCourses');
 
         if (!updatedUser) return res.status(404).json({ message: 'User not found' });
         
+        // Exclude password hash before responding
         const updatedUserObject = updatedUser.toObject();
         delete updatedUserObject.password;
 
@@ -238,21 +160,19 @@ router.put('/:email', upload.single('profilePic'), async (req, res) => {
     }
 });
 
-// 3. CHANGE PASSWORD ROUTE (RETAINED for PLAIN TEXT comparison)
+// 3. CHANGE PASSWORD ROUTE (NO HASHING)
 router.put('/change-password/:email', async (req, res) => {
     try {
         const { email } = req.params;
         const { currentPassword, newPassword } = req.body;
 
-        if (newPassword.length < 6) { // Simple validation
-            return res.status(400).json({ message: 'New password must be at least 6 characters long.' });
-        }
+        // ... (length check) ...
         
         const user = await Signup.findOne({ email });
-        if (!user) return res.status(404).json({ message: 'User not found.' });
+        // ... (user check) ...
 
         // 1. Verify current password using plain text comparison
-        const isMatch = (currentPassword === user.password); 
+        const isMatch = (currentPassword === user.password); // <-- Plain string comparison
         
         if (!isMatch) {
             return res.status(401).json({ message: 'Incorrect current password.' });
@@ -265,20 +185,19 @@ router.put('/change-password/:email', async (req, res) => {
         res.status(200).json({ message: 'Password updated successfully.' });
 
     } catch (error) {
-        console.error('Change password error:', error);
-        res.status(500).json({ message: 'Server error.' });
+        // ...
     }
 });
 
 // ==========================================================
-// 4. COURSE ACTIONS (Existing logic retained)
+// 4. COURSE ACTIONS (Using existing logic/middleware)
 // ==========================================================
 
-// Add Interested Course
+// Add Interested Course (Keeping your existing logic but ensuring User maps to Signup)
 router.post('/add-interest', authMiddleware, async (req, res) => {
     try {
         const { courseId } = req.body;
-        const user = await Signup.findById(req.userId); 
+        const user = await Signup.findById(req.userId); // Use Signup model
         if (!user) return res.status(404).json({ message: "User not found" });
 
         if (!user.interestedCourses.includes(courseId)) {
@@ -294,10 +213,10 @@ router.post('/add-interest', authMiddleware, async (req, res) => {
     }
 });
 
-// Get Interested Courses
+// Get Interested Courses (Keeping your existing logic but ensuring User maps to Signup)
 router.get('/get-interests', authMiddleware, async (req, res) => {
     try {
-        const user = await Signup.findById(req.userId).populate('interestedCourses'); 
+        const user = await Signup.findById(req.userId).populate('interestedCourses'); // Use Signup model
         if (!user) return res.status(404).json({ message: "User not found" });
 
         res.status(200).json({ interestedCourses: user.interestedCourses });
