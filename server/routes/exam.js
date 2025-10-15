@@ -1,6 +1,9 @@
+
+
 import express from "express";
 import axios from "axios";
-const router = express.Router();
+
+const router = express.Router(); // ✅ Use router, not app
 
 // Central government exam RSS feeds
 const feeds = {
@@ -9,7 +12,7 @@ const feeds = {
   ibps: "https://www.ibps.in/rss-feed.xml"
 };
 
-app.get("/api/live-exams", async (req, res) => {
+router.get("/live-exams", async (req, res) => {
   try {
     let allArticles = [];
 
@@ -50,5 +53,6 @@ app.get("/api/live-exams", async (req, res) => {
   }
 });
 
-
 export default router;
+
+
