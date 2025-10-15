@@ -1,14 +1,16 @@
+// routes/exam.js
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 
+// Central government exam RSS feeds
 const feeds = {
   upsc: "https://www.upsc.gov.in/sites/default/files/rss.xml",
   ssc: "https://ssc.nic.in/rss-feed.xml",
   ibps: "https://www.ibps.in/rss-feed.xml"
 };
 
-// Only use router, not app
+// Route: GET /api/exams/live-exams
 router.get("/live-exams", async (req, res) => {
   try {
     let allArticles = [];
@@ -42,6 +44,7 @@ router.get("/live-exams", async (req, res) => {
     }
 
     allArticles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
     res.json({ status: "success", articles: allArticles });
   } catch (err) {
     console.error("Error fetching live exams:", err.message);
