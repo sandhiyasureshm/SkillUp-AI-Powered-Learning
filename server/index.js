@@ -13,7 +13,7 @@ const codingRoutes = require("./routes/codingRoutes");
 const mockInterviewRoutes = require("./routes/mockInterviewRoutes"); // Correct Import
 const userRoutes = require("./routes/userRoutes");
 const otpRoute = require("./routes/otpRoute");
-const examRoutes = require("./routes/exams");
+const examRoutes = require("./routes/exam");
 const app = express();
 
 
