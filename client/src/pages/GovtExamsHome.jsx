@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -21,36 +20,28 @@ export default function GovtExamsHome() {
   useEffect(() => {
     const fetchUpdates = async () => {
       try {
-        const response = await axios.get(
-          "https://newsdata.io/api/1/news", {
-            params: {
-              apikey: "pub_ccecc0fdf85545e09aeaaf46d68a6394",  // Replace with your own NewsData.io key
-              q: "government exam india",
-              country: "in",
-              language: "en",
-              category: "education",
-              sort_by: "pubDate",
-            }
+        const response = await axios.get("https://newsdata.io/api/1/news", {
+          params: {
+            apikey: "pub_ccecc0fdf85545e09aeaaf46d68a6394", // replace with your valid API key
+            q: "government exam india",
+            country: "in",
+            language: "en",
+            sort_by: "pubDate" // remove category for free plan
           }
-        );
+        });
 
-        // Filter articles to only include exam-related titles
-        const articles = response.data.results
-          .filter(item => 
-            item.title.toLowerCase().includes("exam") || 
-            item.title.toLowerCase().includes("notification") ||
-            item.title.toLowerCase().includes("upsc") ||
-            item.title.toLowerCase().includes("ssc") ||
-            item.title.toLowerCase().includes("tnpsc")
-          )
-          .slice(0, 8) // take top 8 updates
-          .map(a => a.title);
-
-        setLiveUpdates(articles.length ? articles : ["No recent exam updates available."]);
+        if (response.data && response.data.results) {
+          const articles = response.data.results
+            .slice(0, 8)
+            .map(a => a.title);
+          setLiveUpdates(articles);
+        } else {
+          setLiveUpdates(["No updates available at the moment."]);
+        }
       } catch (error) {
         console.error("Error fetching live updates:", error);
         setLiveUpdates([
-          "Unable to load live updates. Please check your connection or API key."
+          "Unable to load live updates. Please check your connection or API key.",
         ]);
       } finally {
         setLoading(false);
@@ -82,7 +73,10 @@ export default function GovtExamsHome() {
       </header>
 
       <section className="exam-categories">
-        <div className="exam-card central-card" onClick={() => navigate("/govt-exams/central")}>
+        <div
+          className="exam-card central-card"
+          onClick={() => navigate("/govt-exams/central")}
+        >
           <h2>Central Government Exams</h2>
           <p>Explore UPSC, SSC, RRB, IBPS, and other central-level exams.</p>
           <button className="view-btn">View Central Exams</button>
@@ -102,7 +96,9 @@ export default function GovtExamsHome() {
               <li
                 key={index}
                 onClick={() =>
-                  navigate(`/govt-exams/state/${state.toLowerCase().replace(/ /g, "-")}`)
+                  navigate(
+                    `/govt-exams/state/${state.toLowerCase().replace(/ /g, "-")}`
+                  )
                 }
               >
                 {state}
@@ -115,11 +111,10 @@ export default function GovtExamsHome() {
       <section className="updates-section">
         <h2>📰 Live Government Exam Updates</h2>
         <div className="updates-box">
-          {loading ? (
-            <p>Fetching latest updates...</p>
-          ) : (
-            liveUpdates.map((update, i) => <p key={i}>• {update}</p>)
-          )}
+          {loading
+            ? <p>Fetching latest updates...</p>
+            : liveUpdates.map((update, i) => <p key={i}>• {update}</p>)
+          }
         </div>
       </section>
 
