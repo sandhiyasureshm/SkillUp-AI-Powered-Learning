@@ -7,6 +7,7 @@
   position: relative;
 }
 
+/* 🔙 Back Button */
 .back-btn {
   background: #007bff;
   color: white;
@@ -18,11 +19,11 @@
   margin-bottom: 15px;
   transition: 0.3s;
 }
-
 .back-btn:hover {
   background: #0056b3;
 }
 
+/* 🌈 Hero Section */
 .hero-section {
   text-align: center;
   background: linear-gradient(135deg, #007bff, #00bfa6);
@@ -31,23 +32,21 @@
   border-radius: 16px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-
 .hero-section h1 {
   font-size: 2.5rem;
   margin-bottom: 15px;
 }
-
 .hero-section p {
   font-size: 1.1rem;
   line-height: 1.7;
 }
-
 .highlight {
   margin-top: 10px;
   font-weight: bold;
   color: #fff8dc;
 }
 
+/* 🧭 Exam Category Section */
 .exam-categories {
   display: flex;
   flex-wrap: wrap;
@@ -55,7 +54,6 @@
   margin-top: 50px;
   gap: 30px;
 }
-
 .exam-card {
   background: white;
   border-radius: 16px;
@@ -64,24 +62,22 @@
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 .exam-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
-
 .exam-card h2 {
   color: #007bff;
   font-size: 1.6rem;
   margin-bottom: 10px;
 }
-
 .exam-card p {
   font-size: 1rem;
   line-height: 1.6;
   margin-bottom: 15px;
 }
 
+/* 🔍 Search Box */
 .search-box {
   width: 100%;
   padding: 10px;
@@ -91,6 +87,7 @@
   font-size: 1rem;
 }
 
+/* 📜 States List */
 .states-list {
   list-style: none;
   padding: 0;
@@ -98,7 +95,6 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
-
 .states-list li {
   background: #f0f4f8;
   border-radius: 8px;
@@ -107,12 +103,12 @@
   cursor: pointer;
   transition: 0.3s;
 }
-
 .states-list li:hover {
   background: #007bff;
   color: white;
 }
 
+/* 👁️ View Button */
 .view-btn {
   background: #007bff;
   color: white;
@@ -123,11 +119,11 @@
   font-weight: bold;
   transition: background 0.3s;
 }
-
 .view-btn:hover {
   background: #0056b3;
 }
 
+/* 📰 Live Updates Section */
 .updates-section {
   margin-top: 60px;
   background: #fff;
@@ -135,12 +131,10 @@
   border-radius: 16px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
-
 .updates-section h2 {
   color: #007bff;
   margin-bottom: 15px;
 }
-
 .updates-box {
   background: #f5f9ff;
   border-left: 4px solid #007bff;
@@ -148,32 +142,52 @@
   border-radius: 10px;
   font-size: 1rem;
   line-height: 1.6;
+  animation: fadeIn 0.8s ease-in;
 }
 
+/* ✨ Loading Animation for Live Fetching */
+.updates-box p {
+  margin: 8px 0;
+}
+.loading-text {
+  text-align: center;
+  color: #555;
+  font-weight: 500;
+}
+.loading-text::after {
+  content: "...";
+  animation: dots 1.5s steps(3, end) infinite;
+}
+@keyframes dots {
+  0%, 20% { color: transparent; text-shadow: none; }
+  40% { color: currentColor; text-shadow: 0.25em 0 0 currentColor; }
+  60% { text-shadow: 0.25em 0 0 currentColor, 0.5em 0 0 currentColor; }
+  80%, 100% { text-shadow: 0.25em 0 0 currentColor, 0.5em 0 0 currentColor, 0.75em 0 0 currentColor; }
+}
+
+/* 📚 Info Section */
 .info-section {
   margin-top: 60px;
   background: #eef6ff;
   padding: 30px;
   border-radius: 16px;
 }
-
 .info-section h3 {
   color: #007bff;
   margin-bottom: 15px;
 }
-
 .info-section ul {
   list-style-type: square;
   padding-left: 20px;
   line-height: 1.8;
 }
 
+/* 📱 Responsive */
 @media (max-width: 768px) {
   .exam-categories {
     flex-direction: column;
     align-items: center;
   }
-
   .exam-card {
     width: 90%;
   }

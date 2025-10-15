@@ -1,41 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/GovtExamsHome.css";
 
 const states = [
-  "Tamil Nadu",
-  "Maharashtra",
-  "Karnataka",
-  "Kerala",
-  "West Bengal",
-  "Uttar Pradesh",
-  "Rajasthan",
-  "Bihar",
-  "Punjab",
-  "Haryana",
-  "Andhra Pradesh",
-  "Odisha",
-  "Chhattisgarh",
-  "Gujarat",
-  "Madhya Pradesh",
-  "Telangana",
-  "Jharkhand",
-  "Assam",
-  "Other States"
-];
-
-const liveUpdates = [
-  "UPSC Civil Services 2025 notification expected in February.",
-  "SSC CHSL Tier-II Exam to be held in December 2025.",
-  "RRB NTPC Final Results releasing soon on official portal.",
-  "TNPSC Group IV new vacancies announced for 2025.",
-  "IBPS PO Prelims Exam 2025 scheduled for October.",
-  "SSC CGL 2025 registration opens next month.",
+  "Tamil Nadu", "Maharashtra", "Karnataka", "Kerala", "West Bengal",
+  "Uttar Pradesh", "Rajasthan", "Bihar", "Punjab", "Haryana",
+  "Andhra Pradesh", "Odisha", "Chhattisgarh", "Gujarat",
+  "Madhya Pradesh", "Telangana", "Jharkhand", "Assam", "Other States"
 ];
 
 export default function GovtExamsHome() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const [liveUpdates, setLiveUpdates] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch live updates dynamically
+  useEffect(() => {
+    const fetchUpdates = async () => {
+      try {
+        const response = await axios.get(
+          "https://newsdata.io/api/1/news?apikey=pub_44583f60b6820e5fda4b99b83284b6f38b7b8&q=government%20exam%20notification%20india&country=in&language=en"
+        );
+        const articles = response.data.results.slice(0, 8).map(a => a.title);
+        setLiveUpdates(articles);
+      } catch (error) {
+        console.error("Error fetching live updates:", error);
+        setLiveUpdates([
+          "Unable to load live updates. Please check your connection.",
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUpdates();
+  }, []);
 
   const filteredStates = states.filter((state) =>
     state.toLowerCase().includes(searchTerm.toLowerCase())
@@ -51,8 +51,7 @@ export default function GovtExamsHome() {
         <h1>Welcome to the Government Exams Portal 🇮🇳</h1>
         <p>
           Your complete guide to all <strong>Central</strong> and{" "}
-          <strong>State Government Exams</strong> in India. Explore eligibility,
-          application process, syllabus, and preparation guidance for your dream job.
+          <strong>State Government Exams</strong> in India.
         </p>
         <p className="highlight">
           Stay informed and prepare smartly with verified details and updates.
@@ -60,28 +59,14 @@ export default function GovtExamsHome() {
       </header>
 
       <section className="exam-categories">
-        <div
-          className="exam-card central-card"
-          onClick={() => navigate("/govt-exams/central")}
-        >
+        <div className="exam-card central-card" onClick={() => navigate("/govt-exams/central")}>
           <h2>Central Government Exams</h2>
-          <p>
-            Explore top central exams like <strong>UPSC Civil Services</strong>,
-            <strong> SSC CGL</strong>, <strong>RRB NTPC</strong>,
-            <strong> IBPS PO</strong>, and more. Learn about eligibility,
-            recruitment process, and preparation resources.
-          </p>
+          <p>Explore UPSC, SSC, RRB, IBPS, and other central-level exams.</p>
           <button className="view-btn">View Central Exams</button>
         </div>
 
         <div className="exam-card state-card">
           <h2>State Government Exams</h2>
-          <p>
-            Each state conducts its own exams for administrative, police,
-            revenue, and public service roles. Select your state below to view
-            complete details.
-          </p>
-
           <input
             type="text"
             placeholder="🔍 Search for a state..."
@@ -89,7 +74,6 @@ export default function GovtExamsHome() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-box"
           />
-
           <ul className="states-list">
             {filteredStates.map((state, index) => (
               <li
@@ -108,19 +92,21 @@ export default function GovtExamsHome() {
       <section className="updates-section">
         <h2>📰 Live Government Exam Updates</h2>
         <div className="updates-box">
-          {liveUpdates.map((update, i) => (
-            <p key={i}>• {update}</p>
-          ))}
+          {loading ? (
+            <p>Fetching latest updates...</p>
+          ) : (
+            liveUpdates.map((update, i) => <p key={i}>• {update}</p>)
+          )}
         </div>
       </section>
 
       <footer className="info-section">
         <h3>📚 Important Tips for Aspirants</h3>
         <ul>
-          <li>Check official notifications regularly for accurate information.</li>
+          <li>Check official notifications regularly for accurate info.</li>
           <li>Follow only authorized recruitment portals.</li>
-          <li>Prepare a timetable and stick to daily study targets.</li>
-          <li>Stay positive and keep yourself updated with current affairs.</li>
+          <li>Stick to a daily study plan.</li>
+          <li>Stay updated with current affairs.</li>
         </ul>
       </footer>
     </div>

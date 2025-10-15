@@ -1,3 +1,4 @@
+import examRoutes from "./routes/exams.js";
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -13,6 +14,9 @@ const mockInterviewRoutes = require("./routes/mockInterviewRoutes"); // Correct 
 const userRoutes = require("./routes/userRoutes");
 const otpRoute = require("./routes/otpRoute");
 const app = express();
+
+
+
 
 // ----------------------
 // CORS Configuration (The constant solution)
@@ -80,7 +84,7 @@ app.use('/api/coding', codingRoutes);
 app.use('/api/mock', mockInterviewRoutes); 
 app.use('/api/users', userRoutes);
 app.use("/api", otpRoute);
-
+app.use("/api/exams", examRoutes);
 
 // ----------------------
 // MongoDB Connection
