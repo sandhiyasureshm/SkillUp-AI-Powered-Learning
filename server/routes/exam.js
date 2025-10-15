@@ -4,12 +4,12 @@ const router = express.Router();
 
 // Central government exam RSS feeds
 const feeds = {
-  // Keeping UPSC and SSC, but adding a temporary, known working feed (BBC) 
-  // in place of IBPS to test if the fetching logic works.
+  // NOTE: You must verify these URLs. The temporary BBC feed proved the code works, 
+  // but the current URLs below are likely failing to return content.
   upsc: "https://www.upsc.gov.in/sites/default/files/rss.xml",
   ssc: "https://ssc.nic.in/rss-feed.xml",
-  // TEMPORARY: Using BBC World News to confirm fetching works.
-  ibps: "http://feeds.bbci.co.uk/news/world/rss.xml" 
+  // Restored original IBPS URL. If it fails, find a new one!
+  ibps: "https://www.ibps.in/rss-feed.xml" 
 };
 
 // Route: GET /api/exams/live-exams
