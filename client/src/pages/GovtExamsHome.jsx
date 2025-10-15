@@ -21,7 +21,7 @@ export default function GovtExamsHome() {
     const fetchUpdates = async () => {
       try {
         const response = await axios.get(
-          "https://newsdata.io/api/1/news?apikey=pub_44583f60b6820e5fda4b99b83284b6f38b7b8&q=government%20exam%20notification%20india&country=in&language=en"
+          "https://newsdata.io/api/1/news?apikey=pub_ccecc0fdf85545e09aeaaf46d68a6394"
         );
         const articles = response.data.results.slice(0, 8).map(a => a.title);
         setLiveUpdates(articles);
