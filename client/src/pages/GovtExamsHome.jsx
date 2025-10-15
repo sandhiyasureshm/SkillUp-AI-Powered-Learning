@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -21,19 +22,41 @@ export default function GovtExamsHome() {
     const fetchUpdates = async () => {
       try {
         const response = await axios.get(
-          "https://newsdata.io/api/1/news?apikey=pub_ccecc0fdf85545e09aeaaf46d68a6394"
+          "https://newsdata.io/api/1/news", {
+            params: {
+              apikey: "pub_ccecc0fdf85545e09aeaaf46d68a6394",  // Replace with your own NewsData.io key
+              q: "government exam india",
+              country: "in",
+              language: "en",
+              category: "education",
+              sort_by: "pubDate",
+            }
+          }
         );
-        const articles = response.data.results.slice(0, 8).map(a => a.title);
-        setLiveUpdates(articles);
+
+        // Filter articles to only include exam-related titles
+        const articles = response.data.results
+          .filter(item => 
+            item.title.toLowerCase().includes("exam") || 
+            item.title.toLowerCase().includes("notification") ||
+            item.title.toLowerCase().includes("upsc") ||
+            item.title.toLowerCase().includes("ssc") ||
+            item.title.toLowerCase().includes("tnpsc")
+          )
+          .slice(0, 8) // take top 8 updates
+          .map(a => a.title);
+
+        setLiveUpdates(articles.length ? articles : ["No recent exam updates available."]);
       } catch (error) {
         console.error("Error fetching live updates:", error);
         setLiveUpdates([
-          "Unable to load live updates. Please check your connection.",
+          "Unable to load live updates. Please check your connection or API key."
         ]);
       } finally {
         setLoading(false);
       }
     };
+
     fetchUpdates();
   }, []);
 
