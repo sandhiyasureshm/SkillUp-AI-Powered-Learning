@@ -13,6 +13,7 @@ const codingRoutes = require("./routes/codingRoutes");
 const mockInterviewRoutes = require("./routes/mockInterviewRoutes"); // Correct Import
 const userRoutes = require("./routes/userRoutes");
 const otpRoute = require("./routes/otpRoute");
+const examRoutes = require("./routes/exams");
 const app = express();
 
 
@@ -104,7 +105,6 @@ const feeds = {
   ibps: "https://www.ibps.in/rss-feed.xml"
 };
 
-// Fetch all feeds and return latest articles
 app.get("/api/live-exams", async (req, res) => {
   try {
     let allArticles = [];
@@ -113,7 +113,7 @@ app.get("/api/live-exams", async (req, res) => {
       try {
         const response = await axios.get("https://api.rss2json.com/v1/api.json", {
           params: { rss_url: rssUrl },
-          timeout: 10000,
+          timeout: 10000
         });
 
         if (response.data.items) {
@@ -137,17 +137,12 @@ app.get("/api/live-exams", async (req, res) => {
       });
     }
 
-    // Sort by publication date descending
     allArticles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
     res.json({ status: "success", articles: allArticles });
-
   } catch (err) {
     console.error("Error fetching live exams:", err.message);
-    res.status(500).json({
-      status: "error",
-      message: "Failed to fetch live updates."
-    });
+    res.status(500).json({ status: "error", message: "Failed to fetch live updates." });
   }
 });
 

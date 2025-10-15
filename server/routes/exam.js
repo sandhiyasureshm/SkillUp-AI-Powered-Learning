@@ -2,27 +2,53 @@ import express from "express";
 import axios from "axios";
 const router = express.Router();
 
-// ✅ Live Government Exam Fetch API (real-time)
-router.get("/live", async (req, res) => {
+// Central government exam RSS feeds
+const feeds = {
+  upsc: "https://www.upsc.gov.in/sites/default/files/rss.xml",
+  ssc: "https://ssc.nic.in/rss-feed.xml",
+  ibps: "https://www.ibps.in/rss-feed.xml"
+};
+
+app.get("/api/live-exams", async (req, res) => {
   try {
-    // Using a reliable news feed for exams
-    const response = await axios.get(
-      "https://newsdata.io/api/1/news?apikey=pub_50721b9d44b7c859efef96ee40f904a02f8d5&q=government%20exam%20notification&country=in&language=en"
-    );
+    let allArticles = [];
 
-    // Simplify and send only exam-related titles
-    const exams = response.data.results.map((item) => ({
-      title: item.title,
-      link: item.link,
-      date: item.pubDate,
-      source: item.source_id,
-    }));
+    for (const [name, rssUrl] of Object.entries(feeds)) {
+      try {
+        const response = await axios.get("https://api.rss2json.com/v1/api.json", {
+          params: { rss_url: rssUrl },
+          timeout: 10000
+        });
 
-    res.json(exams);
+        if (response.data.items) {
+          const articles = response.data.items.slice(0, 5).map(item => ({
+            source: name.toUpperCase(),
+            title: item.title,
+            link: item.link,
+            pubDate: item.pubDate
+          }));
+          allArticles = allArticles.concat(articles);
+        }
+      } catch (err) {
+        console.warn(`Error fetching ${name} feed:`, err.message);
+      }
+    }
+
+    if (allArticles.length === 0) {
+      return res.status(500).json({
+        status: "error",
+        message: "Failed to fetch any exam updates."
+      });
+    }
+
+    allArticles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+    res.json({ status: "success", articles: allArticles });
   } catch (err) {
-    console.error("Error fetching live exam data:", err.message);
-    res.status(500).json({ error: "Failed to fetch live government exams." });
+    console.error("Error fetching live exams:", err.message);
+    res.status(500).json({ status: "error", message: "Failed to fetch live updates." });
   }
 });
+
 
 export default router;
