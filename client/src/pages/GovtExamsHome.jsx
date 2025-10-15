@@ -22,27 +22,25 @@ export default function GovtExamsHome() {
       try {
         const response = await axios.get("https://newsdata.io/api/1/news", {
           params: {
-            apikey: "pub_ccecc0fdf85545e09aeaaf46d68a6394", // replace with your valid API key
+            apikey: "pub_ccecc0fdf85545e09aeaaf46d68a6394", // Your API key
             q: "government exam india",
-            country: "in",
             language: "en",
-            sort_by: "pubDate" // remove category for free plan
+            country: "in",
+            category: "education"
           }
         });
 
         if (response.data && response.data.results) {
           const articles = response.data.results
-            .slice(0, 8)
-            .map(a => a.title);
+            .slice(0, 8) // Limit to 8 updates
+            .map(article => article.title);
           setLiveUpdates(articles);
         } else {
           setLiveUpdates(["No updates available at the moment."]);
         }
       } catch (error) {
         console.error("Error fetching live updates:", error);
-        setLiveUpdates([
-          "Unable to load live updates. Please check your connection or API key.",
-        ]);
+        setLiveUpdates(["Unable to load live updates. Please check your connection."]);
       } finally {
         setLoading(false);
       }
@@ -73,10 +71,7 @@ export default function GovtExamsHome() {
       </header>
 
       <section className="exam-categories">
-        <div
-          className="exam-card central-card"
-          onClick={() => navigate("/govt-exams/central")}
-        >
+        <div className="exam-card central-card" onClick={() => navigate("/govt-exams/central")}>
           <h2>Central Government Exams</h2>
           <p>Explore UPSC, SSC, RRB, IBPS, and other central-level exams.</p>
           <button className="view-btn">View Central Exams</button>
@@ -96,9 +91,7 @@ export default function GovtExamsHome() {
               <li
                 key={index}
                 onClick={() =>
-                  navigate(
-                    `/govt-exams/state/${state.toLowerCase().replace(/ /g, "-")}`
-                  )
+                  navigate(`/govt-exams/state/${state.toLowerCase().replace(/ /g, "-")}`)
                 }
               >
                 {state}
@@ -111,10 +104,11 @@ export default function GovtExamsHome() {
       <section className="updates-section">
         <h2>📰 Live Government Exam Updates</h2>
         <div className="updates-box">
-          {loading
-            ? <p>Fetching latest updates...</p>
-            : liveUpdates.map((update, i) => <p key={i}>• {update}</p>)
-          }
+          {loading ? (
+            <p>Fetching latest updates...</p>
+          ) : (
+            liveUpdates.map((update, i) => <p key={i}>• {update}</p>)
+          )}
         </div>
       </section>
 
