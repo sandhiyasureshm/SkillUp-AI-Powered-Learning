@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -10,7 +9,7 @@ const Signup = require('./models/Sign'); // Assuming your user model is here
 // Route Imports
 // ----------------------
 const codingRoutes = require("./routes/codingRoutes"); 
-const mockInterviewRoutes = require("./routes/mockInterviewRoutes"); // Correct Import
+const mockInterviewRoutes = require('./routes/mockInterviewRoutes'); // Correct Import
 const userRoutes = require("./routes/userRoutes");
 const otpRoute = require("./routes/otpRoute");
 const examRoutes = require("./routes/exam");
@@ -26,33 +25,33 @@ const app = express();
 // ----------------------
 
 const allowedOrigins = [
-    'http://localhost:5173', // Must be HTTP for local development
-    'https://skill-up-ai-powered-learning.vercel.app', // Your primary Vercel domain
+    'http://localhost:5173', // Must be HTTP for local development
+    'https://skill-up-ai-powered-learning.vercel.app', // Your primary Vercel domain
 ];
 
 const corsOptions = {
-    // 🎯 Use a function to dynamically allow Vercel preview domains
-    origin: (origin, callback) => {
-        // 1. Allow if the origin is in the explicitly approved list (localhost or main domain)
-        if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } 
-        // 2. Allow if the origin is a Vercel preview domain (ends with .vercel.app)
-        else if (origin && /\.vercel\.app$/.test(origin)) {
-            callback(null, true);
-        }
-        // 3. Allow requests with no origin (like mobile apps, testing tools, or direct server access)
-        else if (!origin) {
-             callback(null, true);
-        }
-        // 4. Block all others
-        else {
-            console.log(`CORS Policy: Blocking request from origin ${origin}`);
-            callback(new Error(`Not allowed by CORS: ${origin}`), false);
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    credentials: true
+    // 🎯 Use a function to dynamically allow Vercel preview domains
+    origin: (origin, callback) => {
+        // 1. Allow if the origin is in the explicitly approved list (localhost or main domain)
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } 
+        // 2. Allow if the origin is a Vercel preview domain (ends with .vercel.app)
+        else if (origin && /\.vercel\.app$/.test(origin)) {
+            callback(null, true);
+        }
+        // 3. Allow requests with no origin (like mobile apps, testing tools, or direct server access)
+        else if (!origin) {
+             callback(null, true);
+        }
+        // 4. Block all others
+        else {
+            console.log(`CORS Policy: Blocking request from origin ${origin}`);
+            callback(new Error(`Not allowed by CORS: ${origin}`), false);
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true
 };
 
 const forgotPasswordRoutes = require('./routes/forgotPasswordRoutes');
@@ -88,7 +87,9 @@ app.use('/api/mock', mockInterviewRoutes);
 app.use('/api/users', userRoutes);
 app.use("/api", otpRoute);
 
-app.use("/api/exams", examRoutes); // /api/exams/live-exams
+// CRITICAL FIX: Reverting mount point to match client URL /api/exams/live-exams
+// This allows the client's URL (from your selection) to correctly resolve.
+app.use("/api/exams", examRoutes); // /api/exams/live-exams 
 
 // ----------------------
 // MongoDB Connection
