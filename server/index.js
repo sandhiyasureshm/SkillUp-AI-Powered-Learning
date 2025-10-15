@@ -19,6 +19,8 @@ const app = express();
 
 
 
+
+
 // ----------------------
 // CORS Configuration (The constant solution)
 // ----------------------
@@ -85,7 +87,8 @@ app.use('/api/coding', codingRoutes);
 app.use('/api/mock', mockInterviewRoutes); 
 app.use('/api/users', userRoutes);
 app.use("/api", otpRoute);
-app.use("/api/exams", examRoutes);
+
+app.use("/api/exams", examRoutes); // /api/exams/live-exams
 
 // ----------------------
 // MongoDB Connection
