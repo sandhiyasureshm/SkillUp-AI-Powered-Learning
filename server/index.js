@@ -97,24 +97,56 @@ mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/AI_Mock", {
     .then(() => console.log("✅ MongoDB connected successfully"))
     .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-app.get("/api/central-exams", async (req, res) => {
-  try {
-    const response = await axios.get(
-      "https://api.rss2json.com/v1/api.json",
-      {
-        params: {
-          rss_url: "https://www.upsc.gov.in/sites/default/files/rss.xml",
-        },
-      }
-    );
+// Central government exam RSS feeds
+const feeds = {
+  upsc: "https://www.upsc.gov.in/sites/default/files/rss.xml",
+  ssc: "https://ssc.nic.in/rss-feed.xml",
+  ibps: "https://www.ibps.in/rss-feed.xml"
+};
 
-    // Extract only titles
-    const updates = response.data.items.map((item) => item.title).slice(0, 10);
-    res.json({ updates });
+// Fetch all feeds and return latest articles
+app.get("/api/live-exams", async (req, res) => {
+  try {
+    let allArticles = [];
+
+    for (const [name, rssUrl] of Object.entries(feeds)) {
+      try {
+        const response = await axios.get("https://api.rss2json.com/v1/api.json", {
+          params: { rss_url: rssUrl },
+          timeout: 10000,
+        });
+
+        if (response.data.items) {
+          const articles = response.data.items.slice(0, 5).map(item => ({
+            source: name.toUpperCase(),
+            title: item.title,
+            link: item.link,
+            pubDate: item.pubDate
+          }));
+          allArticles = allArticles.concat(articles);
+        }
+      } catch (err) {
+        console.warn(`Error fetching ${name} feed:`, err.message);
+      }
+    }
+
+    if (allArticles.length === 0) {
+      return res.status(500).json({
+        status: "error",
+        message: "Failed to fetch any exam updates."
+      });
+    }
+
+    // Sort by publication date descending
+    allArticles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+    res.json({ status: "success", articles: allArticles });
+
   } catch (err) {
-    console.error("Error fetching updates:", err.message);
+    console.error("Error fetching live exams:", err.message);
     res.status(500).json({
-      updates: ["Unable to fetch updates. Please try again later."],
+      status: "error",
+      message: "Failed to fetch live updates."
     });
   }
 });

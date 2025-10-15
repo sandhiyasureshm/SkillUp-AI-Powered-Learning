@@ -10,48 +10,33 @@ const states = [
   "Madhya Pradesh", "Telangana", "Jharkhand", "Assam", "Other States"
 ];
 
-const rssFeeds = [
-  { name: "UPSC", url: "https://www.upsc.gov.in/sites/default/files/rss.xml" },
-  { name: "SSC", url: "https://ssc.nic.in/rss" },
-  { name: "RRB", url: "https://www.rrbcdg.gov.in/rss.xml" },
-  { name: "IBPS", url: "https://www.ibps.in/feed/" },
-];
-
 export default function GovtExamsHome() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [liveUpdates, setLiveUpdates] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch updates from all RSS feeds
   useEffect(() => {
-    const fetchAllFeeds = async () => {
+    const fetchUpdates = async () => {
       try {
-        const allUpdates = [];
-
-        for (const feed of rssFeeds) {
-          const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(feed.url)}`;
-          const response = await axios.get(proxyUrl);
-          const parser = new DOMParser();
-          const xmlDoc = parser.parseFromString(response.data.contents, "text/xml");
-          const items = Array.from(xmlDoc.getElementsByTagName("item")).slice(0, 5); // 5 per feed
-          const updates = items.map(item => `${feed.name}: ${item.getElementsByTagName("title")[0].textContent}`);
-          allUpdates.push(...updates);
+        const response = await axios.get("http://skillup-ai-powered-learning-1.onrender.com/api/live-exams"); // Replace with deployed backend URL
+        if (response.data.status === "success") {
+          setLiveUpdates(response.data.articles);
+        } else {
+          setLiveUpdates([{ title: "No updates available at the moment." }]);
         }
-
-        setLiveUpdates(allUpdates.length > 0 ? allUpdates : ["No updates available at the moment."]);
       } catch (error) {
-        console.error("Error fetching RSS updates:", error);
-        setLiveUpdates(["Unable to load live updates. Please check your connection."]);
+        console.error("Error fetching live updates:", error);
+        setLiveUpdates([{ title: "Unable to fetch updates." }]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAllFeeds();
+    fetchUpdates();
   }, []);
 
-  const filteredStates = states.filter((state) =>
+  const filteredStates = states.filter(state =>
     state.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -64,7 +49,8 @@ export default function GovtExamsHome() {
       <header className="hero-section">
         <h1>Welcome to the Government Exams Portal 🇮🇳</h1>
         <p>
-          Your complete guide to all <strong>Central</strong> and <strong>State Government Exams</strong> in India.
+          Your complete guide to all <strong>Central</strong> and{" "}
+          <strong>State Government Exams</strong> in India.
         </p>
         <p className="highlight">
           Stay informed and prepare smartly with verified details and updates.
@@ -74,7 +60,7 @@ export default function GovtExamsHome() {
       <section className="exam-categories">
         <div className="exam-card central-card" onClick={() => navigate("/govt-exams/central")}>
           <h2>Central Government Exams</h2>
-          <p>Explore UPSC, SSC, RRB, IBPS, and other central-level exams.</p>
+          <p>Explore UPSC, SSC, IBPS, and other central-level exams.</p>
           <button className="view-btn">View Central Exams</button>
         </div>
 
@@ -84,16 +70,14 @@ export default function GovtExamsHome() {
             type="text"
             placeholder="🔍 Search for a state..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={e => setSearchTerm(e.target.value)}
             className="search-box"
           />
           <ul className="states-list">
             {filteredStates.map((state, index) => (
               <li
                 key={index}
-                onClick={() =>
-                  navigate(`/govt-exams/state/${state.toLowerCase().replace(/ /g, "-")}`)
-                }
+                onClick={() => navigate(`/govt-exams/state/${state.toLowerCase().replace(/ /g, "-")}`)}
               >
                 {state}
               </li>
@@ -103,14 +87,16 @@ export default function GovtExamsHome() {
       </section>
 
       <section className="updates-section">
-        <h2>📰 Live Central Government Exam Updates</h2>
+        <h2>📰 Live Central Govt Exam Notifications</h2>
         <div className="updates-box">
           {loading ? (
             <p>Fetching latest official notifications...</p>
-          ) : Array.isArray(liveUpdates) && liveUpdates.length > 0 ? (
-            liveUpdates.map((update, i) => <p key={i}>• {update}</p>)
           ) : (
-            <p>No updates available at the moment.</p>
+            liveUpdates.map((update, i) => (
+              <p key={i}>
+                • {update.source ? `[${update.source}] ` : ""}{update.title}
+              </p>
+            ))
           )}
         </div>
       </section>
