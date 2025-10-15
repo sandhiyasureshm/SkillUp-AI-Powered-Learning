@@ -10,26 +10,45 @@ const states = [
   "Madhya Pradesh", "Telangana", "Jharkhand", "Assam", "Other States"
 ];
 
+const rssFeeds = [
+  { name: "UPSC", url: "https://www.upsc.gov.in/sites/default/files/rss.xml" },
+  { name: "SSC", url: "https://ssc.nic.in/rss" },
+  { name: "RRB", url: "https://www.rrbcdg.gov.in/rss.xml" },
+  { name: "IBPS", url: "https://www.ibps.in/feed/" },
+];
+
 export default function GovtExamsHome() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [liveUpdates, setLiveUpdates] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch updates from your backend
+  // Fetch updates from all RSS feeds
   useEffect(() => {
-    const fetchUpdates = async () => {
+    const fetchAllFeeds = async () => {
       try {
-        const response = await axios.get("/api/central-exams");
-        setLiveUpdates(response.data.updates);
-      } catch (err) {
-        console.error("Error fetching updates:", err);
-        setLiveUpdates(["Unable to fetch updates at this time."]);
+        const allUpdates = [];
+
+        for (const feed of rssFeeds) {
+          const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(feed.url)}`;
+          const response = await axios.get(proxyUrl);
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(response.data.contents, "text/xml");
+          const items = Array.from(xmlDoc.getElementsByTagName("item")).slice(0, 5); // 5 per feed
+          const updates = items.map(item => `${feed.name}: ${item.getElementsByTagName("title")[0].textContent}`);
+          allUpdates.push(...updates);
+        }
+
+        setLiveUpdates(allUpdates.length > 0 ? allUpdates : ["No updates available at the moment."]);
+      } catch (error) {
+        console.error("Error fetching RSS updates:", error);
+        setLiveUpdates(["Unable to load live updates. Please check your connection."]);
       } finally {
         setLoading(false);
       }
     };
-    fetchUpdates();
+
+    fetchAllFeeds();
   }, []);
 
   const filteredStates = states.filter((state) =>
@@ -44,8 +63,12 @@ export default function GovtExamsHome() {
 
       <header className="hero-section">
         <h1>Welcome to the Government Exams Portal 🇮🇳</h1>
-        <p>Your complete guide to all <strong>Central</strong> and <strong>State Government Exams</strong> in India.</p>
-        <p className="highlight">Stay informed and prepare smartly with verified details and updates.</p>
+        <p>
+          Your complete guide to all <strong>Central</strong> and <strong>State Government Exams</strong> in India.
+        </p>
+        <p className="highlight">
+          Stay informed and prepare smartly with verified details and updates.
+        </p>
       </header>
 
       <section className="exam-categories">
@@ -66,9 +89,12 @@ export default function GovtExamsHome() {
           />
           <ul className="states-list">
             {filteredStates.map((state, index) => (
-              <li key={index} onClick={() =>
-                navigate(`/govt-exams/state/${state.toLowerCase().replace(/ /g, "-")}`)
-              }>
+              <li
+                key={index}
+                onClick={() =>
+                  navigate(`/govt-exams/state/${state.toLowerCase().replace(/ /g, "-")}`)
+                }
+              >
                 {state}
               </li>
             ))}
@@ -77,12 +103,14 @@ export default function GovtExamsHome() {
       </section>
 
       <section className="updates-section">
-        <h2>📰 Live Government Exam Updates</h2>
+        <h2>📰 Live Central Government Exam Updates</h2>
         <div className="updates-box">
           {loading ? (
             <p>Fetching latest official notifications...</p>
-          ) : (
+          ) : Array.isArray(liveUpdates) && liveUpdates.length > 0 ? (
             liveUpdates.map((update, i) => <p key={i}>• {update}</p>)
+          ) : (
+            <p>No updates available at the moment.</p>
           )}
         </div>
       </section>
