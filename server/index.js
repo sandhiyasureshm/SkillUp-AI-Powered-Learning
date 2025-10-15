@@ -97,6 +97,28 @@ mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/AI_Mock", {
     .then(() => console.log("✅ MongoDB connected successfully"))
     .catch((err) => console.error("❌ MongoDB connection error:", err));
 
+app.get("/api/central-exams", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://api.rss2json.com/v1/api.json",
+      {
+        params: {
+          rss_url: "https://www.upsc.gov.in/sites/default/files/rss.xml",
+        },
+      }
+    );
+
+    // Extract only titles
+    const updates = response.data.items.map((item) => item.title).slice(0, 10);
+    res.json({ updates });
+  } catch (err) {
+    console.error("Error fetching updates:", err.message);
+    res.status(500).json({
+      updates: ["Unable to fetch updates. Please try again later."],
+    });
+  }
+});
+
 
 // ----------------------
 // User Authentication & Interests (No changes needed)
