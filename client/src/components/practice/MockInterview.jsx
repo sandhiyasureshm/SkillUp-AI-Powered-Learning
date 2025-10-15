@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
-// Removed: import { useSpeechSynthesis, useSpeechRecognition } from 'react-speech-kit'; 
-// Removed: import "../../styles/mock.css"; 
 
 // --- Polyfills/Setup for Browser Native APIs ---
+// Use window.SpeechRecognition or its webkit counterpart
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const speechSynthesis = window.speechSynthesis;
 
-
+// =========================================================
+// 1. Custom Hook: useVideo (Handles Camera/Mic Stream)
+// =========================================================
 
 const useVideo = () => {
     const videoRef = useRef(null);
@@ -38,7 +39,6 @@ const useVideo = () => {
             return mediaStream;
         } catch (err) {
             console.error("Error accessing camera/mic:", err);
-            // In case of error, stop everything
             if (stream) stopCamera(); 
             setStream(null); 
             return null;
@@ -56,12 +56,10 @@ const useVideo = () => {
         }
     };
 
-
-    // EFFECT 1: Attach the stream to the video element whenever the stream changes
+    // EFFECT 1: Attach the stream to the video element
     useEffect(() => {
         if (videoRef.current && stream) {
             videoRef.current.srcObject = stream;
-            // The video element must be explicitly told to play, and muted helps avoid autoplay issues
             videoRef.current.play().catch(e => console.log("Video Play Error:", e));
         }
     }, [stream]); 
@@ -69,15 +67,12 @@ const useVideo = () => {
     // EFFECT 2: Cleanup - Stop the camera when the component unmounts
     useEffect(() => {
         return () => {
-            // Cleanly stop tracks if the component unmounts
             if (stream) {
                 stream.getTracks().forEach(track => track.stop());
             }
         };
-    // Note: 'stream' is used in the cleanup, so it must be a dependency.
     }, [stream]); 
 
-    // --- RETURN STATEMENT ---
     return { videoRef, startCamera, stopCamera, stream, toggleTrack };
 };
 
@@ -119,54 +114,50 @@ const MockInterview = () => {
     useEffect(() => {
         if (isSTTSupported && !recognitionRef.current) {
             const recognition = new SpeechRecognition();
-            recognition.continuous = true; // Use continuous to capture long answers better
-            recognition.interimResults = true; // Show interim results
+            recognition.continuous = true; 
+            recognition.interimResults = true; 
             recognition.lang = 'en-US';
 
-            // Store the recognition instance in a ref
             recognitionRef.current = recognition;
 
             recognition.onresult = (event) => {
-                let interimTranscript = '';
                 let finalTranscript = '';
-
-                // Process all results from the event
                 for (let i = event.resultIndex; i < event.results.length; ++i) {
                     const result = event.results[i][0].transcript;
                     if (event.results[i].isFinal) {
                         finalTranscript += result + ' ';
-                    } else {
-                        interimTranscript += result;
                     }
                 }
                 
-                // When continuous is true, we update the state with the ongoing final transcript
-                // We use a functional update to ensure we don't overwrite previous final sections
+                // Update state only with final transcripts
                 setUserTranscript(prev => (prev + finalTranscript).trim());
             };
             
             recognition.onend = () => {
-                // If onend fires, but listening state is still true, it means it stopped unexpectedly.
                 if (isListening) {
                     setIsListening(false);
+                    // Do not stop listening here, let the button click handle it
                 }
             };
             
             recognition.onerror = (event) => {
                 console.error("Speech Recognition Error:", event.error);
-                if (event.error !== 'no-speech') {
-                    setError("Microphone error. Please check permissions.");
+                if (event.error !== 'no-speech' && isListening) {
+                    setError("Microphone error. Please check permissions or try again.");
                 }
-                setIsListening(false);
+                // Only stop if the error is serious and unexpected
+                if (event.error === 'network' || event.error === 'service-not-allowed') {
+                    setIsListening(false);
+                }
             };
         }
-    }, [isSTTSupported, isListening]); // Dependency on isListening for cleanup logic consistency
+    }, [isSTTSupported, isListening]); 
 
     // Function to speak text using native TTS
     const speakText = useCallback((text) => {
         if (!isTTSSupported || !text) return;
 
-        // Cancel any previous speech
+        // CRITICAL FIX 1: Ensure no speech is active before starting
         speechSynthesis.cancel(); 
         
         const utterance = new SpeechSynthesisUtterance(text);
@@ -184,26 +175,25 @@ const MockInterview = () => {
 
     // --- FUNCTION DEFINITIONS ---
 
-    // Handler for the Video button
     const handleVideoToggle = () => {
         const newState = !isVideoOn;
         setIsVideoOn(newState);
         toggleTrack('video', newState); 
     };
 
-    // Handler for the Mic button
     const handleMicToggle = () => {
         const newState = !isMicOn;
         setIsMicOn(newState);
         toggleTrack('audio', newState);
+        
         // If mic is turned off, stop listening immediately
         if (!newState && isListening) {
             if (recognitionRef.current) recognitionRef.current.stop();
             setIsListening(false);
+            speechSynthesis.cancel();
         }
     };
 
-    // Function to generate the final summary report
     const generateFinalReport = async (finalQuestions) => {
         setLoading(true);
         try {
@@ -224,7 +214,6 @@ const MockInterview = () => {
         }
     };
 
-    // Function to evaluate the user's answer
     const evaluateAnswer = async (answer, behaviorScore) => { 
         setLoading(true);
         setIsListening(false); 
@@ -232,18 +221,15 @@ const MockInterview = () => {
         try {
             const evaluationResponse = await axios.post("https://skillup-ai-powered-learning-1.onrender.com/api/mock/evaluate-answer", {
                 question: currentQuestion.text,
-                // Removed ideal_answer as it's not present in the questions structure and may cause API issues
                 user_answer: answer,
                 role: role,
                 body_language_score: behaviorScore 
             });
 
-            // Store the evaluation for this question
             const newQuestions = [...questions];
             newQuestions[currentQIndex].evaluation = evaluationResponse.data.evaluation;
             setQuestions(newQuestions);
 
-            // Move to the next question or finish
             if (currentQIndex < questions.length - 1) {
                 setError('');
                 setCurrentQIndex(currentQIndex + 1); 
@@ -260,7 +246,7 @@ const MockInterview = () => {
         }
     };
     
-    // Function to handle the start/stop of user recording
+    // CRITICAL FIX 2: Tighter control over speech start/stop
     const toggleListening = () => {
         if (!isMicOn) {
             setError("Microphone is off. Please turn it on to record your answer.");
@@ -275,36 +261,34 @@ const MockInterview = () => {
         if (isListening) {
             // STOP recording and SUBMIT
             if (recognitionRef.current) recognitionRef.current.stop();
-            setIsListening(false); // Explicitly stop the listening state
+            setIsListening(false); 
             
             setTimeout(() => {
                 if (userTranscript.trim()) {
-                    // Simulate a random score change between 6 and 10
                     const simulatedScore = Math.floor(Math.random() * 5) + 6; 
-                    setBodyLanguageScore(simulatedScore); // Update score visually
+                    setBodyLanguageScore(simulatedScore); 
                     
                     evaluateAnswer(userTranscript, simulatedScore); 
                 } else {
+                    // Only show error if we stopped and had no content
                     setError("Please speak your answer before stopping the recording.");
                 }
             }, 50); 
             
         } else {
             // START recording
+            
+            // CRITICAL: Stop the AI's voice immediately when user starts recording
+            speechSynthesis.cancel(); 
+
             setUserTranscript(''); 
             setIsListening(true);
             setError('');
-            
-            // CRITICAL: Stop the AI's voice immediately if it's speaking when user starts recording
-            if (speechSynthesis.speaking) { 
-                speechSynthesis.cancel();
-            }
             
             if (recognitionRef.current) recognitionRef.current.start();
         }
     };
         
-    // Function to generate the interview questions
     const startInterview = async () => {
         if (!role.trim()) {
             setError("Please enter a role/topic to begin.");
@@ -316,7 +300,6 @@ const MockInterview = () => {
         setQuestions([]);
         setCurrentQIndex(0);
         
-        // Start camera and microphone access
         const streamResult = await startCamera(); 
 
         if (!streamResult) {
@@ -331,29 +314,34 @@ const MockInterview = () => {
             setInterviewStarted(true);
         } catch (err) {
             setError("Failed to generate interview. Check API key and server.");
-            stopCamera(); // Stop camera on failure
+            stopCamera(); 
             console.error(err);
         } finally {
             setLoading(false);
         }
     };
 
-    // 🎯 FIX: Auto-speak the question when it changes (SYNCHRONIZATION)
+    // CRITICAL FIX 3: Tighter control over when the AI speaks.
     useEffect(() => {
-        if (interviewStarted && currentQuestion && currentQuestion.text) {
-            // Only speak if the AI is not currently speaking and the user is not trying to record
-            if (!speaking && !isListening) { 
-                speakText(currentQuestion.text);
+        // Only speak the question during the main interview phase
+        if (interviewStarted && currentQuestion && currentQuestion.text && !report) {
+            // Stop TTS if the user just started listening (even if state is delayed)
+            if (isListening) {
+                speechSynthesis.cancel();
+                return;
             }
+
+            // Only proceed if the AI isn't currently speaking and is not about to speak
+            if (speaking || speechSynthesis.speaking) return; 
+            
+            // Speak the question
+            speakText(currentQuestion.text);
         } else if (report) {
-            // Speak only if report state is set and AI is not already talking
-            if (!speaking) {
+            // Speak only for the final report
+            if (!speaking && !speechSynthesis.speaking) {
                 speakText("The interview is complete. Preparing your final feedback report now.");
             }
         }
-        
-    // Dependencies: currentQuestion?.text triggers speaking for new question;
-    // speaking/isListening ensures we don't interrupt.
     }, [currentQIndex, interviewStarted, report, speaking, isListening, currentQuestion?.text, speakText]); 
 
 
@@ -364,10 +352,10 @@ const MockInterview = () => {
     const primaryButtonClasses = `${buttonBaseClasses} bg-indigo-600 text-white hover:bg-indigo-700 disabled:bg-indigo-400 disabled:cursor-not-allowed`;
     const secondaryButtonClasses = `${buttonBaseClasses} bg-gray-200 text-gray-700 hover:bg-gray-300`;
 
-
+    // FIX: Ensure a distinct background color is set on the main view
     if (loading) return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-50">
-            <div className="p-8 bg-white rounded-xl shadow-lg text-lg font-medium text-indigo-600">
+        <div className="flex items-center justify-center min-h-screen bg-indigo-50">
+            <div className="p-8 bg-white rounded-xl shadow-lg text-lg font-medium text-indigo-600 flex items-center">
                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -382,7 +370,7 @@ const MockInterview = () => {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
                 <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
-                    <h3 className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2">Start Your Mock Interview</h3>
+                    <h3 className="text-3xl font-extrabold text-indigo-800 mb-4 border-b pb-2">Start Your Mock Interview</h3>
                     <p className="text-gray-600 mb-6">Enter the job role or topic you want to be interviewed for.</p>
                     <input
                         type="text"
@@ -395,8 +383,8 @@ const MockInterview = () => {
                         Start Interview
                     </button>
                     {error && <p className="text-red-500 mt-3 text-sm">{error}</p>}
-                    {!isTTSSupported && <p className="text-yellow-600 mt-3 text-sm">⚠️ Voice output (TTS) is not fully supported in this browser.</p>}
-                    {!isSTTSupported && <p className="text-red-600 mt-3 text-sm">🛑 Voice input (STT) is not fully supported in this browser.</p>}
+                    {!isTTSSupported && <p className="text-yellow-600 mt-3 text-sm">⚠️ Voice output (TTS) may not be supported in this browser.</p>}
+                    {!isSTTSupported && <p className="text-red-600 mt-3 text-sm">🛑 Voice input (STT) is not supported in this browser.</p>}
                 </div>
             </div>
         );
@@ -408,28 +396,28 @@ const MockInterview = () => {
         const prevEvaluation = prevQuestionIndex !== null ? questions[prevQuestionIndex].evaluation : null;
 
         return (
-            <div className="min-h-screen bg-gray-50 p-4 sm:p-8 flex flex-col items-center">
+            <div className="min-h-screen bg-gray-100 p-4 sm:p-8 flex flex-col items-center">
                 <div className="w-full max-w-6xl space-y-8">
                     
                     {/* 1. Video/Avatar Section (Two Cameras) */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         
                         {/* Placeholder for the Professional AI Interviewer Avatar */}
-                        <div className="bg-white rounded-xl shadow-lg p-4 flex flex-col items-center border-4 border-indigo-200">
-                            <p className="text-lg font-semibold text-indigo-700 mb-2">👤 AI Interviewer ({role})</p>
+                        <div className="bg-white rounded-xl shadow-xl p-4 flex flex-col items-center border-4 border-indigo-400/50">
+                            <p className="text-lg font-bold text-indigo-700 mb-2">👤 AI Interviewer ({role})</p>
                             <div className="w-full max-w-sm aspect-video bg-gray-200 rounded-lg flex items-center justify-center relative overflow-hidden">
                                 <p className="text-gray-500 text-center">Professional AI Avatar Here</p>
                                 {speaking && (
-                                    <span className="absolute bottom-2 left-2 px-3 py-1 bg-indigo-500 text-white text-sm font-medium rounded-full animate-pulse shadow-lg">
-                                        ... Speaking
+                                    <span className="absolute bottom-2 left-2 px-3 py-1 bg-indigo-600 text-white text-sm font-medium rounded-full animate-pulse shadow-lg">
+                                        ... AI Speaking
                                     </span>
                                 )}
                             </div>
                         </div>
 
                         {/* User's Camera Box */}
-                        <div className="bg-white rounded-xl shadow-lg p-4 flex flex-col items-center border-4 border-green-200 relative">
-                            <p className="text-lg font-semibold text-green-700 mb-2">Your Video Feed</p>
+                        <div className="bg-white rounded-xl shadow-xl p-4 flex flex-col items-center border-4 border-green-400/50 relative">
+                            <p className="text-lg font-bold text-green-700 mb-2">Your Video Feed</p>
                             <div className='w-full max-w-sm aspect-video relative'>
                                 <video 
                                     ref={videoRef} 
@@ -459,14 +447,14 @@ const MockInterview = () => {
                     </div>
                     
                     {/* 2. Question and Control Panel */}
-                    <div className="bg-white p-6 sm:p-8 rounded-xl shadow-2xl border-t-4 border-indigo-500">
+                    <div className="bg-white p-6 sm:p-8 rounded-xl shadow-2xl border-t-4 border-indigo-600">
                         <h4 className="text-xl font-bold text-gray-700 mb-4">
                             Question {currentQIndex + 1} of {questions.length} 
                             <span className="ml-3 px-3 py-1 bg-indigo-100 text-indigo-700 text-sm font-medium rounded-full">
                                 {currentQuestion.category}
                             </span>
                         </h4>
-                        <p className="text-2xl font-light text-gray-900 mb-6 border-b pb-4">{currentQuestion.text}</p>
+                        <p className="text-2xl font-extralight text-gray-900 mb-6 border-b pb-4">{currentQuestion.text}</p>
 
                         <div className="mic-control flex flex-col space-y-4">
                             <button 
@@ -513,7 +501,6 @@ const MockInterview = () => {
 
     // Final Report View
     if (report) {
-        // stopCamera is called when generateFinalReport is triggered
         return (
             <div className="min-h-screen flex items-start justify-center bg-gray-100 p-8">
                 <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-4xl border-t-8 border-indigo-600">
