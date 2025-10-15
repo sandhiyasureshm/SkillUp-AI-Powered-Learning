@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Home.css";
 
@@ -24,8 +24,6 @@ export default function NavBar() {
   const handleMouseEnter = (menu) => setOpenDropdown(menu);
   const handleMouseLeave = () => setOpenDropdown(null);
 
- 
-
   const handleSearchResultClick = (path) => {
     navigate(path);
     setSearchQuery("");
@@ -34,10 +32,12 @@ export default function NavBar() {
 
   const handleFallbackSearch = () => {
     const query = searchQuery.trim();
-    if (query === "") return;
+    if (!query) return;
+
     const exactMatch = allSearchableItems.find(
       (item) => item.title.toLowerCase() === query.toLowerCase()
     );
+
     if (exactMatch) handleSearchResultClick(exactMatch.path);
     else {
       navigate(`/search?q=${encodeURIComponent(query)}`);
@@ -50,53 +50,36 @@ export default function NavBar() {
     if (e.key === "Enter") handleFallbackSearch();
   };
 
- // Define handleLogout to ensure it exists and clears local storage
   const handleLogout = () => {
     localStorage.removeItem("user");
-    setUser(null); // Clear the state immediately
+    setUser(null);
     navigate("/login");
   };
 
-  // ======================================================
-  // 2. SAFE User Load from Local Storage (The Critical Part)
-  // ======================================================
+  // Load user from local storage
   useEffect(() => {
     const userJson = localStorage.getItem("user");
-    
-    // Check if the item exists at all
     if (userJson) {
       try {
         const storedUser = JSON.parse(userJson);
-        
-        // Ensure the parsed data is a valid object (not null, undefined, or a string)
-        if (storedUser && typeof storedUser === 'object') {
-          // Success: Set the user state
-          setUser(storedUser);
-        } else {
-          // Data is corrupted/invalid (e.g., "null" string, or empty object)
-          console.warn("Invalid user data found in storage. Clearing it.");
-          localStorage.removeItem("user");
-        }
+        if (storedUser && typeof storedUser === "object") setUser(storedUser);
+        else localStorage.removeItem("user");
       } catch (error) {
-        // Parsing failed (e.g., malformed JSON)
-        console.error("Error parsing user data. Clearing storage.", error);
         localStorage.removeItem("user");
       }
     }
-  }, []); // Runs only once when the component mounts
-  // =========================
-  // Fetch Dropdown Data
-  // =========================
+  }, []);
+
+  // Fetch dropdown data
   useEffect(() => {
     const fetchDropdowns = async () => {
       try {
-        const [coursesRes, tutorialsRes, practiceRes, examsRes] =
-          await Promise.all([
-            axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/courses"),
-            axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/tutorials"),
-            axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/practice"),
-            axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/exams"),
-          ]);
+        const [coursesRes, tutorialsRes, practiceRes, examsRes] = await Promise.all([
+          axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/courses"),
+          axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/tutorials"),
+          axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/practice"),
+          axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/dropdowns/exams"),
+        ]);
 
         setDropdownData({
           courses: Array.isArray(coursesRes.data) ? coursesRes.data : [],
@@ -108,10 +91,10 @@ export default function NavBar() {
         console.error("Error fetching dropdown data:", err);
       }
     };
-
     fetchDropdowns();
   }, []);
 
+  // All searchable items
   const allSearchableItems = useMemo(() => {
     const items = [];
 
@@ -128,28 +111,30 @@ export default function NavBar() {
     );
 
     const practicePages = [
-      { title: "Quiz", path: "/practice/quiz", category: "Quiz" },
-      { title: "Coding Challenge", path: "/practice/coding", category: "Coding Challenge" },
+      { title: "Quiz", path: "/practice/quiz", category: "Practice" },
+      { title: "Coding Challenge", path: "/practice/coding", category: "Practice" },
       { title: "Mock Interview", path: "/practice/mock-interviews", category: "Practice" },
-      { title: "Resume Builder", path: "/practice/resume-builder", category: "Tool" },
+      { title: "Resume Builder", path: "/practice/resume-builder", category: "Practice" },
     ];
     items.push(...practicePages);
 
     return items;
   }, [dropdownData]);
 
+  // Search filter
   useEffect(() => {
     const query = searchQuery.trim().toLowerCase();
-    if (query.length > 1) {
+    if (query.length > 0) {
       const filtered = allSearchableItems
         .filter((item) => item.title.toLowerCase().includes(query))
-        .slice(0, 8);
+        .slice(0, 10);
       setSearchResults(filtered);
     } else {
       setSearchResults([]);
     }
   }, [searchQuery, allSearchableItems]);
 
+  // Click outside to close search dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -160,20 +145,13 @@ export default function NavBar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // =========================
-  // JSX Render
-  // =========================
+  // JSX render
   return (
     <nav className="navbar">
-      <div className="navbar-logo" onClick={() => navigate("/home")}>
-        SkillUp
-      </div>
-      
+      <div className="navbar-logo" onClick={() => navigate("/home")}>SkillUp</div>
 
       <ul className="navbar-links">
-        <li onClick={() => navigate("/home")}>
-          <span className="nav-link">Home</span>
-        </li>
+        <li onClick={() => navigate("/home")}><span className="nav-link">Home</span></li>
 
         {["courses", "jobs", "tutorials", "practice", "govt"].map((menu) => (
           <li
@@ -197,36 +175,28 @@ export default function NavBar() {
 
             {openDropdown === menu && (
               <ul className="dropdown-menu">
-                {/* Dropdown Items */}
                 {menu === "jobs"
                   ? ["Freshers", "Experienced", "Internships", "Govt Jobs"].map((job) => (
-                      <li key={job} onClick={(e) => { e.stopPropagation(); navigate(`/jobs/${job.toLowerCase().replace(/ /g, "-")}`); }}>{job}</li>
+                      <li key={job} onClick={() => navigate(`/jobs/${job.toLowerCase().replace(/ /g, "-")}`)}>{job}</li>
                     ))
                   : menu === "practice"
-                  ? <>
-                      <li onClick={() => navigate("/practice/quiz")}>📝 Quiz</li>
-                      <li onClick={() => navigate("/practice/coding")}>💻 Coding Challenge</li>
-                      <li onClick={() => navigate("/practice/mock-interviews")}>🎤 Mock Interview</li>
-                      <li onClick={() => navigate("/practice/resume-builder")}>📄 Resume Builder</li>
-                    </>
+                  ? ["Quiz", "Coding Challenge", "Mock Interview", "Resume Builder"].map((item) => (
+                      <li key={item} onClick={() => navigate(`/practice/${item.toLowerCase().replace(/ /g, "-")}`)}>{item}</li>
+                    ))
                   : menu === "tutorials"
-                  ? <>
-                      <li onClick={() => navigate("/tutorials/frontend-advanced")}>Frontend Advanced</li>
-                      <li onClick={() => navigate("/tutorials/backend-advanced")}>Backend Advanced</li>
-                      <li onClick={() => navigate("/tutorials/system-design-and-databases")}>System Design & Databases</li>
-                      <li onClick={() => navigate("/tutorials/fullstack-projects")}>Fullstack Projects</li>
-                      <li onClick={() => navigate("/tutorials/other-professional-skills")}>Other Professional Skills</li>
-                    </>
+                  ? dropdownData.tutorials.map((item) => (
+                      <li key={item._id} onClick={() => navigate(`/tutorials/${toSlug(item.title)}`)}>{item.title}</li>
+                    ))
+                  : menu === "courses"
+                  ? dropdownData.courses.map((item) => (
+                      <li key={item._id} onClick={() => navigate(`/course/${item._id}`)}>{item.title || item.courseName}</li>
+                    ))
                   : menu === "govt"
-                  ? <>
-                      <li onClick={() => navigate("/govt-exams")}>Govt Exams Home</li>
-                      <li onClick={() => navigate("/govt-exams/central")}>Central Govt Exams</li>
-                      <li onClick={() => navigate("/govt-exams/state")}>State Govt Exams</li>
-                    </>
-                  : Array.isArray(dropdownData[menu]) &&
-                    dropdownData[menu].map((item) => (
-                      <li key={item._id} onClick={(e) => { e.stopPropagation(); if(menu==="courses") navigate(`/course/${item._id}`); else navigate(`/${menu}/${toSlug(item.title)}`); }}>{item.title || item.courseName}</li>
-                    ))}
+                  ? dropdownData.govt.map((item) => (
+                      <li key={item._id} onClick={() => navigate(`/govt-exams/${toSlug(item.title || item.examName)}`)}>{item.title || item.examName}</li>
+                    ))
+                  : null
+                }
               </ul>
             )}
           </li>
@@ -254,21 +224,16 @@ export default function NavBar() {
               View all results for "{searchQuery}"
             </li>
           </ul>
-          
         )}
       </div>
-        {/* USER PROFILE/LOGIN */}
-   <div className="navbar-user">
-  <div onClick={() => navigate("/profile")} className="user-info">
-    <span className="user-icon">👤</span>
-    <span className="user-name">Hi, Welcome</span>
-  </div>
-  <button className="logout-btn" onClick={handleLogout}>
-    Logout
-  </button>
-</div>
-  
 
+      <div className="navbar-user">
+        <div onClick={() => navigate("/profile")} className="user-info">
+          <span className="user-icon">👤</span>
+          <span className="user-name">Hi, Welcome</span>
+        </div>
+        {user && <button className="logout-btn" onClick={handleLogout}>Logout</button>}
+      </div>
     </nav>
   );
 }
