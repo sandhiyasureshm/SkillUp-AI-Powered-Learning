@@ -19,7 +19,7 @@ export default function GovtExamsHome() {
   useEffect(() => {
     const fetchUpdates = async () => {
       try {
-        const response = await axios.get("http://skillup-ai-powered-learning-1.onrender.com/api/live-exams"); // Replace with deployed backend URL
+        const response = await axios.get("https://skillup-ai-powered-learning-1.onrender.com/api/live-exams"); // Replace with deployed backend URL
         if (response.data.status === "success") {
           setLiveUpdates(response.data.articles);
         } else {
