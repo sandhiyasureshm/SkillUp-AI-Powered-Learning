@@ -4,9 +4,12 @@ const router = express.Router();
 
 // Central government exam RSS feeds
 const feeds = {
+  // Keeping UPSC and SSC, but adding a temporary, known working feed (BBC) 
+  // in place of IBPS to test if the fetching logic works.
   upsc: "https://www.upsc.gov.in/sites/default/files/rss.xml",
   ssc: "https://ssc.nic.in/rss-feed.xml",
-  ibps: "https://www.ibps.in/rss-feed.xml"
+  // TEMPORARY: Using BBC World News to confirm fetching works.
+  ibps: "http://feeds.bbci.co.uk/news/world/rss.xml" 
 };
 
 // Route: GET /api/exams/live-exams
@@ -54,6 +57,7 @@ router.get("/live-exams", async (req, res) => {
 
     allArticles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
+    // We've successfully fetched data!
     res.json({ status: "success", articles: allArticles });
   } catch (error) {
     // If ANY unhandled error occurred (network issue, unexpected JSON parse),
