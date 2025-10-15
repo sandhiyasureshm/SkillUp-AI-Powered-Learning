@@ -16,37 +16,51 @@ export default function GovtExamsHome() {
   const [liveUpdates, setLiveUpdates] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch live updates dynamically
-  useEffect(() => {
-    const fetchUpdates = async () => {
-      try {
-        const response = await axios.get("https://newsdata.io/api/1/news", {
-          params: {
-            apikey: "pub_ccecc0fdf85545e09aeaaf46d68a6394", // Your API key
-            q: "government exam india",
-            language: "en",
-            country: "in",
-            category: "education"
-          }
-        });
+  // Function to fetch central exam notifications
+  const fetchRSSUpdates = async () => {
+    setLoading(true);
+    try {
+      const rssFeeds = [
+        "https://www.upsc.gov.in/sites/default/files/rss.xml",
+        // Add official SSC, RRB, IBPS RSS feeds here
+      ];
 
-        if (response.data && response.data.results) {
-          const articles = response.data.results
-            .slice(0, 8) // Limit to 8 updates
-            .map(article => article.title);
-          setLiveUpdates(articles);
-        } else {
-          setLiveUpdates(["No updates available at the moment."]);
+      let combinedUpdates = [];
+
+      for (let feed of rssFeeds) {
+        const res = await axios.get(
+          `https://api.rss2json.com/v1/api.json`,
+          { params: { rss_url: feed } }
+        );
+
+        if (res.data.status === "ok") {
+          const titles = res.data.items.slice(0, 5).map(item => item.title);
+          combinedUpdates = [...combinedUpdates, ...titles];
         }
-      } catch (error) {
-        console.error("Error fetching live updates:", error);
-        setLiveUpdates(["Unable to load live updates. Please check your connection."]);
-      } finally {
-        setLoading(false);
       }
-    };
 
-    fetchUpdates();
+      if (combinedUpdates.length === 0) {
+        combinedUpdates = ["No live updates found. Check official portals."];
+      }
+
+      setLiveUpdates(combinedUpdates);
+    } catch (error) {
+      console.error("Error fetching RSS updates:", error);
+      setLiveUpdates(["Unable to load notifications. Check your connection."]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch on component mount and set interval for auto-refresh every 10 mins
+  useEffect(() => {
+    fetchRSSUpdates(); // Initial fetch
+
+    const interval = setInterval(() => {
+      fetchRSSUpdates();
+    }, 10 * 60 * 1000); // 10 minutes in milliseconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
   const filteredStates = states.filter((state) =>
@@ -66,7 +80,7 @@ export default function GovtExamsHome() {
           <strong>State Government Exams</strong> in India.
         </p>
         <p className="highlight">
-          Stay informed and prepare smartly with verified details and updates.
+          Stay informed with official notifications and updates.
         </p>
       </header>
 
@@ -102,10 +116,10 @@ export default function GovtExamsHome() {
       </section>
 
       <section className="updates-section">
-        <h2>📰 Live Government Exam Updates</h2>
+        <h2>📰 Live Central Government Exam Notifications</h2>
         <div className="updates-box">
           {loading ? (
-            <p>Fetching latest updates...</p>
+            <p>Fetching latest official notifications...</p>
           ) : (
             liveUpdates.map((update, i) => <p key={i}>• {update}</p>)
           )}
@@ -115,7 +129,7 @@ export default function GovtExamsHome() {
       <footer className="info-section">
         <h3>📚 Important Tips for Aspirants</h3>
         <ul>
-          <li>Check official notifications regularly for accurate info.</li>
+          <li>Check official notifications regularly.</li>
           <li>Follow only authorized recruitment portals.</li>
           <li>Stick to a daily study plan.</li>
           <li>Stay updated with current affairs.</li>
