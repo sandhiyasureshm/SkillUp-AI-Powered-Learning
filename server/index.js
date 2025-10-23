@@ -98,7 +98,7 @@ app.get("/", (req, res) => {
 // ----------------------
 // MongoDB Connection
 // ----------------------
-mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/AI_Mock", {
+mongoose.connect("mongodb+srv://sandhiyasuresh:suresh321@cluster0.cii3c.mongodb.net/AI_Mock" , {
     // These options are often unnecessary in newer Mongoose versions but don't hurt
     // useNewUrlParser: true, 
     // useUnifiedTopology: true,
