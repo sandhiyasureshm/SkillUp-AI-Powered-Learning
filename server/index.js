@@ -91,6 +91,9 @@ app.use('/api/users', userRoutes);
 app.use("/api", otpRoute);
 
 app.use("/api/exams", examRoutes); // /api/exams/live-exams
+app.get("/", (req, res) => {
+  res.send("Backend is running successfully 🚀");
+});
 
 // ----------------------
 // MongoDB Connection
