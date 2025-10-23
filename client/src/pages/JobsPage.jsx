@@ -31,7 +31,7 @@ export default function JobsPage() {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`https://skillup-ai-powered-learning-1.onrender.com/api/jobs/${mappedCategory}`, {
+      const response = await axios.get(`https://skillup-ai-powered-learning.onrender.com/api/jobs/${mappedCategory}`, {
         params: {
           query: searchQuery,
           location: selectedLocation,

@@ -30,12 +30,12 @@ function CoursePage({ user: propUser }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const courseRes = await axios.get(`https://skillup-ai-powered-learning-1.onrender.com/courses/${id}`);
+                const courseRes = await axios.get(`https://skillup-ai-powered-learning.onrender.com/courses/${id}`);
                 setCourseData(courseRes.data);
 
                 if (user && user._id) { 
                     const progressRes = await axios.get(
-                        `https://skillup-ai-powered-learning-1.onrender.com/courses/progress/${id}/${user._id}`
+                        `https://skillup-ai-powered-learning.onrender.com/courses/progress/${id}/${user._id}`
                     );
                     setCompletedVideos(progressRes.data.completedVideos || []);
                 }
@@ -52,7 +52,7 @@ function CoursePage({ user: propUser }) {
         }
 
         try {
-            await axios.post(`https://skillup-ai-powered-learning-1.onrender.com/courses/progress/mark-finished`, {
+            await axios.post(`https://skillup-ai-powered-learning.onrender.com/courses/progress/mark-finished`, {
                 userId: user._id,
                 courseId: id,
                 videoLink,
@@ -84,7 +84,7 @@ function CoursePage({ user: propUser }) {
             {/* Course Header */}
             <div className="course-header">
                 <img
-                    src={`https://skillup-ai-powered-learning-1.onrender.com/images/${courseData.imageUrl}`}
+                    src={`https://skillup-ai-powered-learning.onrender.com/images/${courseData.imageUrl}`}
                     alt={courseData.title}
                     className="course-image"
                 />

@@ -21,7 +21,7 @@ const Courses = () => {
     // Fetch all courses
     const fetchAllCourses = async () => {
         try {
-            const response = await axios.get('https://skillup-ai-powered-learning-1.onrender.com/courses');
+            const response = await axios.get('https://skillup-ai-powered-learning.onrender.com/courses');
             setCourses(response.data);
         } catch (error) {
             console.error("Error fetching courses:", error);
@@ -31,7 +31,7 @@ const Courses = () => {
     // Fetch user interested courses
     const fetchInterestedCourses = async (userId) => {
         try {
-            const response = await axios.get(`https://skillup-ai-powered-learning-1.onrender.com/get-interests/${userId}`);
+            const response = await axios.get(`https://skillup-ai-powered-learning.onrender.com/get-interests/${userId}`);
             setInterestedCourses(response.data.interestedCourses.map(c => c._id));
         } catch (error) {
             console.error('Error fetching interested courses:', error);
@@ -43,7 +43,7 @@ const Courses = () => {
         if (!user) return alert('Please login to add courses to interested list');
 
         try {
-            const response = await axios.post('https://skillup-ai-powered-learning-1.onrender.com/add-interest', {
+            const response = await axios.post('https://skillup-ai-powered-learning.onrender.com/add-interest', {
                 userId: user._id,
                 courseId
             });
@@ -79,7 +79,7 @@ const Courses = () => {
                     {courses.map(course => (
                         <div key={course._id} className="course-card">
                             <img
-                                src={`https://skillup-ai-powered-learning-1.onrender.com/images/${course.imageUrl}`}
+                                src={`https://skillup-ai-powered-learning.onrender.com/images/${course.imageUrl}`}
                                 alt={course.title}
                                 className="course-img"
                             />

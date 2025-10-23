@@ -27,7 +27,7 @@ export default function Signup() {
     }
 
     try {
-      await axios.post('https://skillup-ai-powered-learning-1.onrender.com/reg', {
+      await axios.post('https://skillup-ai-powered-learning.onrender.com/reg', {
         name: formData.name,
         email: formData.email,
         password: formData.password,

@@ -27,7 +27,7 @@ const CodingPractice = () => {
         setEvaluationResult(null); // Reset evaluation on new challenge
 
         try {
-            const response = await axios.post("https://skillup-ai-powered-learning-1.onrender.com/api/coding/generate-coding-challenge", {
+            const response = await axios.post("https://skillup-ai-powered-learning.onrender.com/api/coding/generate-coding-challenge", {
                 topic, language, difficulty,
             });
 
@@ -54,7 +54,7 @@ const CodingPractice = () => {
         setEvaluationResult(null);
 
         try {
-            const response = await axios.post("https://skillup-ai-powered-learning-1.onrender.com/api/coding/evaluate-code", {
+            const response = await axios.post("https://skillup-ai-powered-learning.onrender.com/api/coding/evaluate-code", {
                 challenge: challenge,
                 userCode: userCode,
                 language: language,
